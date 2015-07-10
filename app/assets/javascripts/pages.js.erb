@@ -1,0 +1,65 @@
+$(document).ready( function() {
+/*
+  $.ajax({
+    url: "/api/request_from_local_network.json",
+    dataType: "text",
+    success: function(data) {
+      if (data === "true") {
+        changeBackgroundColor(new Date());
+        randomPornBackground();
+        window.setInterval(randomPornBackground, 40000);
+      } else {
+*/
+        changeBackgroundImage(
+          '<%= asset_path("images/bg5.png") %>');
+        changeBackgroundColor(new Date());
+        $("html").css("background-size", "cover");
+        $("html").css("background-position", "top left");
+/*
+      }
+    }
+  });
+*/
+
+  $(document).on("page:fetch", startSpinner);
+  $(document).on("page:receive", stopSpinner);
+  // The first change of color should not transition. Subsequent changes should.
+  $("html").css("transition", "background-color 2s ease");
+  window.setInterval(function() { changeBackgroundColor(new Date()) }, 60000);
+});
+
+function startSpinner() {
+  $("html").css("background-color", "rgb(116,0,0)");
+}
+
+function stopSpinner() {
+  changeBackgroundColor(new Date());
+}
+
+function changeBackgroundImage(url) {
+  $("html").css("background-image", "url(\"" + url + "\")");
+}
+
+function changeBackgroundColor(date) {
+  $.ajax({
+    url:"/api/sky_color.json",
+    DataType:"text",
+    complete: function(data) {
+      color = data.responseText;
+      $("html").css("background-color", color)
+    }
+  });
+}
+
+function randomPornBackground() {
+  $.ajax({
+    url: "/api/random_porn.json",
+    dataType: "text",
+    success: function(url) {
+      changeBackgroundImage(url);
+      document.getElementById("download-background-image").href = url;
+      $("html").css("background-size", "contain");
+      $("html").css("background-position", "bottom right");
+    }
+  });
+}

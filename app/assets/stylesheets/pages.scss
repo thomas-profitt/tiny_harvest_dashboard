@@ -1,0 +1,197 @@
+// Place all the styles related to the pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import 'colors';
+
+* {
+  box-sizing:border-box;
+}
+
+html {
+  background-size:contain;
+  background-position:right bottom;
+  background-repeat:no-repeat;
+  width:100%;
+  height:100%;
+  background-color:$background;
+  font-size:1.5rem;
+}
+* {
+  font-family: Helvetica Neue, Helvetica, Arial, Sans-Serif;
+  color:$text;
+  text-shadow:0px 0px 3px $text-shadow;
+}
+.time {
+  font-family:Roboto Mono;
+  color:$time;
+  text-align:center;
+  line-height:1em;
+  &.done-at {
+    color:$done-at;
+  }
+  &.big {
+    font-size:350%;
+    font-weight:100;
+  }
+}
+li {
+  list-style-type:none;
+}
+.div-container {
+  display:block;
+  width:13em;
+  margin-top:15%;
+  margin-right:auto;
+  margin-left:auto;
+  div {
+    padding:6px;
+    background-color:$cell-background-light;
+    border-top-width:2px;
+    border-bottom-width:2px;
+    border-top-style:solid;
+    border-bottom-style:solid;
+    border-top-color:$cell-border-light-on-light;
+    border-bottom-color:$cell-border-dark-on-light;
+    span {
+      display:block;
+    }
+    span:not(.time) {
+      display:block;
+      &:last-child {
+        text-align:right;
+      }
+    }
+    &:first-child {
+      border-top-left-radius:1em;
+      border-top-right-radius:3px;
+      background-color:$cell-background-dark;
+      border-top-width:3px;
+      border-top-color:$cell-border-light-on-dark;
+      border-bottom-color:$cell-border-dark-on-dark;
+    }
+    &:last-child {
+      border-bottom-right-radius:1em;
+      border-bottom-left-radius:3px;
+      background-color:$cell-background-dark;
+      border-bottom-width:3px;
+      border-top-color:$cell-border-less-light-on-dark;
+      border-bottom-color:$cell-border-less-dark-on-dark;
+    }
+  }
+}
+a {
+  color:$active;
+  text-decoration:underline;
+}
+#yesterday, #today, #tomorrow {
+  text-decoration:none;
+  position:absolute;
+  top:calc(50vh - 1em);
+  font-size:2em;
+}
+#today {
+  top:50vh;
+}
+#yesterday, .back_to_today {
+  left:0.5em;
+  &:before {
+    content:"〈";
+  }
+}
+.back_to_today {
+  &:after {
+    content:"Today";
+  }
+}
+#tomorrow, .forward_to_today {
+  right:0.5em;
+  &:after {
+    content:"〉";
+  }
+}
+.forward_to_today {
+  &:before {
+    content:"Today";
+  }
+}
+#download_background_image {
+  position:fixed;
+  top:10px;
+  right:10px;
+}
+img {
+  display:none;
+}
+#download-background-image[href="#"] {
+  display:none;
+}
+
+@media only screen and (max-width:1024px) {
+  html {
+    font-size:2.5em;
+    height:100vh;
+  }
+  .div-container {
+    height:100%;
+    margin-top:1em;
+    div, div:first-child, div:last-child {
+      background:none;
+      border:none;
+    }
+  }
+  #download-background-image {
+    position:inherit;
+    display:block;
+    text-align:right;
+    height:1em;
+  }
+  #yesterday, .back_to_today {
+    left:0;
+  }
+  .back_to_today {
+    &:after {
+      content:"T";
+    }
+  }
+  #tomorrow, .forward_to_today {
+    right:0;
+  }
+  .forward_to_today {
+    &:before {
+      content:"T";
+    }
+  }
+}
+
+@media only screen and (max-width:600px) {
+  html {
+    font-size:5vw;
+  }
+}
+@media only screen and (max-width:1024px) and (max-aspect-ratio:88/100) {
+  #yesterday, #today, #tomorrow {
+    top:calc(25vh - 1em);
+  }
+  #today {
+    top:calc(25vh);
+  }
+}
+@media only screen and (max-width:1024px) and (min-aspect-ratio:88/100) {
+  html {
+    font-size:2vw;
+  }
+  .div-container {
+    width:100%;
+    div {
+      display:inline-block;
+      width:30%;
+      overflow:hidden;
+    }
+  }
+  li {
+    width:50%;
+    display:inline-block;
+    float:left;
+  }
+}

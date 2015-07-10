@@ -1,0 +1,16 @@
+<% @times.each do |hours| %>
+  <div style="float:left;display:inline-block;padding:0 0.5em;width:<%= 100 / @times.to_a.length.to_f %>%;font-size:0.01em;height:10vh;"><%= hours %></div>
+<% end %>
+
+<script>
+  $("div").each(function() {
+    var thisDiv = this;
+    $.ajax({
+      url:"/api/sky_color?hours=" + thisDiv.innerHTML,
+      dataType:"text",
+      complete: function(data) {
+        $(thisDiv).css("background-color", data.responseText);
+      }
+    });
+  });
+</script>
