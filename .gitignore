@@ -22,3 +22,5 @@
 *.swo
 *.swn
 .DS_Store
+
+public/assets/**
