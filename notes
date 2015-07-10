@@ -1,0 +1,4 @@
+During the first deployment to production, calling helper.asset_path "bg5.png" from rails c returned a filepath with a proper fingerprint,
+while calling asser_path from within js.erb or html.erb would yield a path to a file without a fingerprint, and a 404.
+
+Removing a bunch of default gems from the gemfile solved this.

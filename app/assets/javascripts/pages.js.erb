@@ -10,8 +10,7 @@ $(document).ready( function() {
         window.setInterval(randomPornBackground, 40000);
       } else {
 */
-        changeBackgroundImage(
-          '<%= asset_path("images/bg5.png") %>');
+        changeBackgroundImage('<%= image_path("bg5.png") %>');
         changeBackgroundColor(new Date());
         $("html").css("background-size", "cover");
         $("html").css("background-position", "top left");
