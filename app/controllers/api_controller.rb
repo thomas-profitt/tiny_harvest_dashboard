@@ -102,7 +102,7 @@ class ApiController < ApplicationController
   end
 
   def random_porn_url
-    tag_whitelist = ["male"]
+    tag_whitelist = []
     tag_blacklist =
       ["female", "intersex", "breasts", "pussy", "scat", "fart",
        "my_little_pony", "five_nights_at_freddy's", "blood", "mot",
@@ -136,7 +136,11 @@ class ApiController < ApplicationController
       i += 1
     end
 
-    return result["file_url"]
+    if params["full"]
+      return result.to_json
+    else
+      return result["file_url"].to_json
+    end
   end
 
 end

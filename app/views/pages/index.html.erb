@@ -37,8 +37,16 @@
 
 <%# FIXME %>
 <ul>
-  <% @days_and_hours_this_week.map{ |x| x[:hours] }.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}.sort_by{|x| x[-1]}.reverse.each do |kv| %>
-    <% next if kv[0] == "Total" %>
-    <li><span class="time"><%= hours_to_human kv[-1] %></span> <%= kv[0] %></li>
+  <% @days_and_hours_this_week.map { |x| x[:hours] }.
+    inject { |memo, el|
+      memo.merge( el ) { |k, old_v, new_v| old_v + new_v }
+    }.
+    sort_by { |x, y| y <=> x }.
+    each do |kv| %>
+      <% next if kv[0] == "Total" %>
+      <li>
+        <span class="time"><%= hours_to_human kv[-1] %></span>
+        <%= kv[0] %>
+      </li>
   <% end %>
 </ul>

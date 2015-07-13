@@ -2,7 +2,7 @@ $(document).ready( function() {
 /*
   $.ajax({
     url: "/api/request_from_local_network.json",
-    dataType: "text",
+    dataType: "true",
     success: function(data) {
       if (data === "true") {
         changeBackgroundColor(new Date());
@@ -53,10 +53,11 @@ function changeBackgroundColor(date) {
 function randomPornBackground() {
   $.ajax({
     url: "/api/random_porn.json",
-    dataType: "text",
-    success: function(url) {
-      changeBackgroundImage(url);
-      document.getElementById("download-background-image").href = url;
+    dataType: "json",
+    success: function(data) {
+      changeBackgroundImage(data);
+      document.getElementById("download-background-image").href =
+        data;
       $("html").css("background-size", "contain");
       $("html").css("background-position", "bottom right");
     }
