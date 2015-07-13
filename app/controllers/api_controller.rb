@@ -2,7 +2,7 @@ class ApiController < ApplicationController
 
   # GET
   def random_porn
-    render json: random_porn_url
+    render json: random_porn_url.to_json
   end
 
   # GET
@@ -12,7 +12,7 @@ class ApiController < ApplicationController
 
   # GET
   def request_from_local_network
-    render json: request_from_local_network?
+    render json: request_from_local_network?.to_json
   end
 
   def sky_color
@@ -79,7 +79,7 @@ class ApiController < ApplicationController
     end
 
     color = "hsl(#{hue},#{saturation}%,#{lightness}%)"
-    render json: color
+    render json: color.to_json
   end
 
   private ######################################################################
@@ -137,9 +137,9 @@ class ApiController < ApplicationController
     end
 
     if params["full"]
-      return result.to_json
+      return result
     else
-      return result["file_url"].to_json
+      return result["file_url"]
     end
   end
 

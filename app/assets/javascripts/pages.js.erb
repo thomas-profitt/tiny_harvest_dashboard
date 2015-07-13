@@ -1,24 +1,24 @@
 $(document).ready( function() {
-/*
+<%#
   $.ajax({
     url: "/api/request_from_local_network.json",
-    dataType: "true",
+    dataType: "json",
     success: function(data) {
-      if (data === "true") {
+      if (data.responseJSON === true) {
         changeBackgroundColor(new Date());
         randomPornBackground();
         window.setInterval(randomPornBackground, 40000);
       } else {
-*/
-        changeBackgroundImage('<%= image_path("bg5.png") %>');
-        changeBackgroundColor(new Date());
-        $("html").css("background-size", "cover");
-        $("html").css("background-position", "top left");
-/*
+%>
+  changeBackgroundImage('<%= image_path("bg5.png") %>');
+  changeBackgroundColor(new Date());
+  $("html").css("background-size", "cover");
+  $("html").css("background-position", "top left");
+<%#
       }
     }
   });
-*/
+%>
 
   $(document).on("page:fetch", startSpinner);
   $(document).on("page:receive", stopSpinner);
@@ -42,14 +42,14 @@ function changeBackgroundImage(url) {
 function changeBackgroundColor(date) {
   $.ajax({
     url:"/api/sky_color.json",
-    DataType:"text",
+    DataType:"json",
     complete: function(data) {
-      color = data.responseText;
-      $("html").css("background-color", color)
+      $("html").css("background-color", data.responseJSON)
     }
   });
 }
 
+<%#
 function randomPornBackground() {
   $.ajax({
     url: "/api/random_porn.json",
@@ -63,3 +63,4 @@ function randomPornBackground() {
     }
   });
 }
+%>
