@@ -53,6 +53,8 @@ li {
     border-bottom-style:solid;
     border-top-color:$cell-border-light-on-light;
     border-bottom-color:$cell-border-dark-on-light;
+    //background:linear-gradient(20deg, $cell-gradient-light-dark,
+    //                                  $cell-gradient-light-light);
     span {
       display:block;
     }
@@ -62,18 +64,21 @@ li {
         text-align:right;
       }
     }
-    &:first-child {
+    &:first-child, &:last-child {
       border-top-left-radius:1em;
       border-top-right-radius:3px;
       background-color:$cell-background-dark;
       border-top-width:3px;
       border-top-color:$cell-border-light-on-dark;
       border-bottom-color:$cell-border-dark-on-dark;
+      //background:linear-gradient(20deg, $cell-gradient-light-light,
+      //                                $cell-gradient-light-dark);
     }
     &:last-child {
+      border-top-left-radius:0;
+      border-top-right-radius:0;
       border-bottom-right-radius:1em;
       border-bottom-left-radius:3px;
-      background-color:$cell-background-dark;
       border-bottom-width:3px;
       border-top-color:$cell-border-less-light-on-dark;
       border-bottom-color:$cell-border-less-dark-on-dark;
