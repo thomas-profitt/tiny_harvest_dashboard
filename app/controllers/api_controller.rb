@@ -18,11 +18,16 @@ class ApiController < ApplicationController
   def sky_color
 
     if params[:hours]
-      hours = params[:hours].to_f
+      color = sky_color_for_hours params[:hours].to_f
     else
-      hours = Time.now.hour + (Time.now.min / 60.0) + (Time.now.sec / 3600.0)
+      color = sky_color_for_hours
     end
 
+    render json: color.to_json
+
+  end
+
+  def sky_color_for_hours(hours = Time.now.hour + (Time.now.min / 60.0) + (Time.now.sec / 3600.0))
     hue = 200
     saturation = 50
     lightness = 10
@@ -73,7 +78,7 @@ class ApiController < ApplicationController
     end
 
     color = "hsl(#{hue},#{saturation}%,#{lightness}%)"
-    render json: color.to_json
+    return color
   end
 
   private ######################################################################
