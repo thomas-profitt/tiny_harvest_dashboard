@@ -23,7 +23,8 @@ $(document).ready( function() {
   $(document).on("page:receive", stopSpinner);
   // The first change of color should not transition. Subsequent changes should.
   $("html").css("transition", "background-color 2s ease");
-  window.setInterval(function() { changeBackgroundColor(new Date()) }, 60000);
+  <%# window.setInterval(function() { changeBackgroundColor(new Date()) }, 60000); %>
+  window.setTimeout(function() { location.reload(); }, 60000);
 });
 
 function startSpinner() {
