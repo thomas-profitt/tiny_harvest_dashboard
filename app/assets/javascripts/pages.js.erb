@@ -11,22 +11,20 @@ $(document).ready( function() {
         window.setInterval(randomPornBackground, 40000);
       } else {
 %>
+  changeBackgroundColor();
   changeBackgroundImage('<%= image_path("bg5.png") %>');
-  updateHarvestData();
-  changeBackgroundColor(new Date());
   $("html").css("background-size", "cover");
   $("html").css("background-position", "top left");
+  updateHarvestData(getURLParam("days"));
 <%#
       }
     }
   });
 %>
 
-  $(document).on("page:fetch", startSpinner);
-  $(document).on("page:receive", stopSpinner);
   window.setInterval(function() {
     changeBackgroundColor(new Date());
-    updateHarvestData();
+    updateHarvestData(getURLParam("days"));
   }, updateInterval);
 });
 
@@ -36,38 +34,38 @@ function startSpinner() {
 }
 
 function stopSpinner() {
-  changeBackgroundColor(new Date());
+  changeBackgroundColor();
 }
 
 function changeBackgroundImage(url) {
   $("html").css("background-image", "url(\"" + url + "\")");
 }
 
-function changeBackgroundColor(date) {
+function changeBackgroundColor() {
   $.ajax({
     url:"/api/sky_color.json",
     dataType:"json",
     complete: function(data) {
-      $("html").css("background-color", data.responseText);
+      $("html").css("background-color", data.responseJSON);
     }
   });
 }
 
-function updateHarvestData(date) {
+function updateHarvestData() {
   $.ajax({
-    url:"/api/harvest_data.json",
+    url:"/api/harvest_data.json?",
     dataType:"json",
     complete: function(data) {
-      r = data.responseJSON;
-      $("#hours-today").html(r.hours_today);
-      $("#hours-needed-today").html(r.hours_needed_today);
-      $("#done-at").html(r.done_at);
+      var response = data.responseJSON;
+      $("#hours-today").html(response.hours_today);
+      $("#hours-needed-today").html(response.hours_needed_today);
+      $("#done-at").html(response.done_at);
       $("#times-and-projects").empty();
-      for (var key in r.projects_and_hours_this_week) {
+      for (var key in response.projects_and_hours_this_week) {
         $("#times-and-projects").append(
           $("<li></li>").addClass("time-and-project")
             .append($("<span></span>").addClass("time")
-              .html(r.projects_and_hours_this_week[key]))
+              .html(response.projects_and_hours_this_week[key]))
             .append($("<span></span>").addClass("project").html(" " + key))
         );
       }

@@ -24,11 +24,11 @@ class ApiController < ApplicationController
   end
 
   # GET
-  def harvest_data()
+  def harvest_data
     harvest = Harvest.client(subdomain: ENV["HARVEST_SUBDOMAIN"],
                              username: ENV["HARVEST_USERNAME"],
                              password: ENV["HARVEST_PASSWORD"])
-    
+
     today = Date.today
     today += params[:days].to_i.days
 
