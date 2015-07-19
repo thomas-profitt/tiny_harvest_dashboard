@@ -11,6 +11,7 @@
 html {
   background-size:contain;
   background-position:right bottom;
+  background-attachment:fixed;
   background-repeat:no-repeat;
   width:100%;
   height:100%;
@@ -36,8 +37,12 @@ html {
     font-weight:100;
   }
 }
-li {
+.time-and-project {
   list-style-type:none;
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 .div-container {
   display:block;
@@ -92,7 +97,7 @@ a {
 }
 #yesterday, #today, #tomorrow {
   text-decoration:none;
-  position:absolute;
+  position:fixed;
   top:calc(50vh - 1em);
   font-size:2em;
 }
@@ -122,7 +127,7 @@ a {
   }
 }
 #download-background-image {
-  position:fixed;
+  position:absolute;
   top:10px;
   right:10px;
 }
@@ -136,9 +141,10 @@ img {
   display:block;
   font-size:2em;
   text-align:center;
-  position:fixed;
+  position:absolute;
   color:$time;
   width:100vw;
+  max-width:100%;
   top:0;
   left:0;
 }
@@ -150,7 +156,7 @@ img {
   }
   .div-container {
     height:100%;
-    margin-top:1em;
+    margin-top:0;
     div, div:first-child, div:last-child {
       background:none;
       border:none;
@@ -185,7 +191,12 @@ img {
     font-size:5vw;
   }
 }
-@media only screen and (max-width:1024px) and (max-aspect-ratio:88/100) {
+@media only screen and (max-width:1024px) {
+  body {
+    margin-top:2em;
+  }
+}
+@media only screen and (max-width:1024px) and (max-aspect-ratio:90/100) {
   #yesterday, #today, #tomorrow {
     top:calc(40vh - 1em);
   }
@@ -193,13 +204,16 @@ img {
     top:calc(40vh);
   }
   #human-today {
-    top:10px;
-    left:10px;
+    top:0;
+    padding-left:10px;
     text-align:left;
     font-size:150%;
   }
+  #download-background-image {
+    top:0;
+  }
 }
-@media only screen and (max-width:1024px) and (min-aspect-ratio:88/100) {
+@media only screen and (max-width:1024px) and (min-aspect-ratio:90/100) {
   html {
     font-size:2vw;
   }
