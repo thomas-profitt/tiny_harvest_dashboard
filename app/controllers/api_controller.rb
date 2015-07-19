@@ -32,6 +32,7 @@ class ApiController < ApplicationController
     today = Date.today
     today -= 1.day if Time.now.hour < 7
     today += params[:days].to_i.days
+    human_today = today.to_time.strftime("%A, #{today.to_time.day.ordinalize}")
 
     monday = today
     monday -= 1.day until monday.monday?
@@ -84,6 +85,7 @@ class ApiController < ApplicationController
       Hash[days_and_hours_this_week.map { |x| x[:hours] }.inject { |memo, el| memo.merge(el) { |k, old_v, new_v| old_v + new_v }}.sort_by { |k, v| v }.each { |a| a[-1] = hours_to_human a[-1] }.reject { |a| a.first == "Total" }.reverse]
 
     render json: {
+      human_today: human_today,
       hours_today: hours_to_human(hours_today),
       hours_needed_today: hours_to_human(hours_needed_today),
       done_at: done_at,

@@ -1,6 +1,8 @@
 <%= link_to "", params.merge({days: params[:days] - 1}),
   id: "yesterday" %>
 
+<span id="human-today">Loading…</span>
+
 <% if params[:days] && params[:days] != 0 %>
   <%= link_to "", params.merge({days: 0}),
     id: "today",

@@ -132,6 +132,16 @@ img {
 #download-background-image[href="#"] {
   display:none;
 }
+#human-today {
+  display:block;
+  font-size:2em;
+  text-align:center;
+  position:fixed;
+  color:$time;
+  width:100vw;
+  top:0;
+  left:0;
+}
 
 @media only screen and (max-width:1024px) {
   html {
@@ -177,10 +187,16 @@ img {
 }
 @media only screen and (max-width:1024px) and (max-aspect-ratio:88/100) {
   #yesterday, #today, #tomorrow {
-    top:calc(25vh - 1em);
+    top:calc(40vh - 1em);
   }
   #today {
-    top:calc(25vh);
+    top:calc(40vh);
+  }
+  #human-today {
+    top:10px;
+    left:10px;
+    text-align:left;
+    font-size:150%;
   }
 }
 @media only screen and (max-width:1024px) and (min-aspect-ratio:88/100) {

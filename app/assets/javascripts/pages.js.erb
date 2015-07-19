@@ -1,4 +1,5 @@
 var updateInterval = 60000;
+
 $(document).ready( function() {
 <%#
   $.ajax({
@@ -53,10 +54,11 @@ function changeBackgroundColor() {
 
 function updateHarvestData() {
   $.ajax({
-    url:"/api/harvest_data.json?",
+    url:"/api/harvest_data.json?days=" + getURLParam("days"),
     dataType:"json",
     complete: function(data) {
       var response = data.responseJSON;
+      $("#human-today").html(response.human_today);
       $("#hours-today").html(response.hours_today);
       $("#hours-needed-today").html(response.hours_needed_today);
       $("#done-at").html(response.done_at);
