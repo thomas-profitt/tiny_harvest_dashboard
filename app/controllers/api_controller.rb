@@ -2,12 +2,20 @@ class ApiController < ApplicationController
 
   # GET
   def random_porn
-    render json: random_porn_url.to_json
+    if request_from_local_network
+      render json: random_porn_url.to_json
+    else
+      render json: "request for scary porn denied"
+    end
   end
 
   # GET
   def redirect_to_random_porn
-    redirect_to random_porn_url[:file_path]
+    if request_from_local_network
+      redirect_to random_porn_url[:file_path]
+    else
+      render json: "request for scary porn denied"
+    end
   end
 
   # GET
@@ -94,6 +102,10 @@ class ApiController < ApplicationController
 
   end
 
+
+  private ######################################################################
+
+
   def sky_color_for_hours(hours = Time.now.hour + (Time.now.min / 60.0) + (Time.now.sec / 3600.0))
     hue = 200
     saturation = 50
@@ -147,8 +159,6 @@ class ApiController < ApplicationController
     color = "hsl(#{hue},#{saturation}%,#{lightness}%)"
     return color
   end
-
-  private ######################################################################
 
   def hours_to_human(hours)
     hours_negative = (hours < 0)
