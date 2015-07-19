@@ -30,6 +30,7 @@ class ApiController < ApplicationController
                              password: ENV["HARVEST_PASSWORD"])
 
     today = Date.today
+    today -= 1.day if Time.now.hour < 7
     today += params[:days].to_i.days
 
     monday = today
