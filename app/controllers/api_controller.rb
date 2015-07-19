@@ -15,6 +15,73 @@ class ApiController < ApplicationController
     render json: request_from_local_network?.to_json
   end
 
+  # GET
+  def harvest_data()
+    harvest = Harvest.client(subdomain: ENV["HARVEST_SUBDOMAIN"],
+                             username: ENV["HARVEST_USERNAME"],
+                             password: ENV["HARVEST_PASSWORD"])
+    
+    today = Date.today
+    today += params[:days].to_i.days
+
+    monday = today
+    monday -= 1.day until monday.monday?
+    days_and_hours_this_week = (monday..today).map do |date|
+      harvest_time_data = harvest.time.all(date)
+      total_hours_this_date = harvest_time_data.map{|x| x[:hours] }.inject(:+)
+      { date: date,
+        hours: (harvest_time_data.map{ |x| {x[:project] => x[:hours]} } <<
+          { "Total" => total_hours_this_date || 0 }).
+          inject(:merge)
+      }
+    end
+
+    days_and_hours_this_week.each do |hash|
+      hash.values.each do |value|
+        value ||= 0
+      end
+    end
+
+    hours_this_week = 0
+    days_and_hours_this_week.each do |hash|
+      hours_this_day = hash[:hours]["Total"]
+      hours_this_week += hours_this_day if hours_this_day.respond_to?(:+)
+    end
+
+    hours_today = days_and_hours_this_week.last[:hours]["Total"]
+    hours_today ||= 0
+
+    hours_owed =  (8 * (days_and_hours_this_week.length - 1)) -
+      (hours_this_week - hours_today)
+
+    hours_needed_today = 40 - hours_this_week
+    unless today.friday? || today.sunday? || today.saturday?
+      if hours_needed_today > (8 + hours_owed)
+        hours_needed_today = (8 + hours_owed)
+      end
+      hours_needed_today -= hours_today
+    end
+    hours_needed_today = 0 if hours_needed_today < 0
+
+    done_at = nil
+    if hours_needed_today > 0
+      done_at = (Time.now + hours_needed_today.hours).strftime("%02l:%M")
+    else
+      done_at = "DONE!"
+    end
+
+    # FIXME magic
+    projects_and_hours_this_week =
+      Hash[days_and_hours_this_week.map { |x| x[:hours] }.inject { |memo, el| memo.merge(el) { |k, old_v, new_v| old_v + new_v }}.sort_by { |k, v| v }.each { |a| a[-1] = hours_to_human a[-1] }.reject { |a| a.first == "Total" }.reverse]
+
+    render json: {
+      hours_today: hours_to_human(hours_today),
+      hours_needed_today: hours_to_human(hours_needed_today),
+      done_at: done_at,
+      projects_and_hours_this_week: projects_and_hours_this_week
+    }
+  end
+
   def sky_color
 
     if params[:hours]
@@ -82,6 +149,15 @@ class ApiController < ApplicationController
   end
 
   private ######################################################################
+
+  def hours_to_human(hours)
+    hours_negative = (hours < 0)
+    hours = -hours if hours_negative
+    ret = sprintf "%02i:%02i", hours, (60 * (hours - hours.to_i)).round
+    ret = "-" << ret if hours_negative
+
+    ret
+  end
 
   def range_value_from_position(range, position)
     range_from_zero = shift_range(range, -range.first)

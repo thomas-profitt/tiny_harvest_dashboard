@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'api/request_from_local_network' => 'api#request_from_local_network'
   get 'api/sky_color'
   get 'sky_color_test' => "pages#sky_color_test"
+  get 'api/harvest_data'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

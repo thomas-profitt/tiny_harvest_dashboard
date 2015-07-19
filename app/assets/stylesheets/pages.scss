@@ -16,6 +16,7 @@ html {
   height:100%;
   background-color:$background;
   font-size:1.5rem;
+  transition:background-color 2s linear;
 }
 * {
   font-family: Helvetica Neue, Helvetica, Arial, Sans-Serif;
@@ -27,7 +28,7 @@ html {
   color:$time;
   text-align:center;
   line-height:1em;
-  &.done-at {
+  &#done-at {
     color:$done-at;
   }
   &.big {
@@ -98,29 +99,29 @@ a {
 #today {
   top:50vh;
 }
-#yesterday, .back_to_today {
+#yesterday, .back-to-today {
   left:0.5em;
   &:before {
     content:"〈";
   }
 }
-.back_to_today {
+.back-to-today {
   &:after {
     content:"Today";
   }
 }
-#tomorrow, .forward_to_today {
+#tomorrow, .forward-to-today {
   right:0.5em;
   &:after {
     content:"〉";
   }
 }
-.forward_to_today {
+.forward-to-today {
   &:before {
     content:"Today";
   }
 }
-#download_background_image {
+#download-background-image {
   position:fixed;
   top:10px;
   right:10px;
@@ -151,18 +152,18 @@ img {
     text-align:right;
     height:1em;
   }
-  #yesterday, .back_to_today {
+  #yesterday, .back-to-today {
     left:0;
   }
-  .back_to_today {
+  .back-to-today {
     &:after {
       content:"T";
     }
   }
-  #tomorrow, .forward_to_today {
+  #tomorrow, .forward-to-today {
     right:0;
   }
-  .forward_to_today {
+  .forward-to-today {
     &:before {
       content:"T";
     }

@@ -1,16 +1,10 @@
-<% if @hours_needed_today > 0 %>
-  <% done_at = (Time.now + @hours_needed_today.hours).strftime("%02l:%M") %>
-<% else %>
-  <% done_at = "DONE!" %>
-<% end %>
-
 <%= link_to "", params.merge({days: params[:days] - 1}),
   id: "yesterday" %>
 
 <% if params[:days] && params[:days] != 0 %>
   <%= link_to "", params.merge({days: 0}),
     id: "today",
-    class: params[:days] > 0 ? "back_to_today" : "forward_to_today" %>
+    class: params[:days] > 0 ? "back-to-today" : "forward-to-today" %>
 <% end %>
 
 <a id="download-background-image" href="#" target="_blank" download>
@@ -22,31 +16,21 @@
 
 <div class="div-container">
   <div>
-    <span class="big time"><%= hours_to_human @hours_today %></span>
+    <span class="big time" id="hours-today">XX:XX</span>
     <span>…today.</span>
   </div>
   <div>
-    <span class="big time"><%= hours_to_human @hours_needed_today %></span>
+    <span class="big time" id="hours-needed-today">XX:XX</span>
     <span>…to go.</span>
   </div>
   <div>
     <span>Done at:</span>
-    <span class="big time done-at"><%= done_at %></span>
+    <span class="big time" id="done-at">XX:XX</span>
   </div>
 </div>
 
-<%# FIXME %>
-<ul>
-  <% @days_and_hours_this_week.map { |x| x[:hours] }.
-    inject { |memo, el|
-      memo.merge( el ) { |k, old_v, new_v| old_v + new_v }
-    }.
-    sort_by { |x, y| y <=> x }.
-    each do |kv| %>
-      <% next if kv[0] == "Total" %>
-      <li>
-        <span class="time"><%= hours_to_human kv[-1] %></span>
-        <%= kv[0] %>
-      </li>
-  <% end %>
+<ul id="times-and-projects">
+  <li class="time-and-project">
+    <span class="time"></span><span class="project"></span>
+  </li>
 </ul>
