@@ -2,19 +2,21 @@ class ApiController < ApplicationController
 
   # GET
   def random_porn
-    if request_from_local_network
-      render json: random_porn_url.to_json
+    what_to_render = ""
+
+    if request_from_local_network?
+      what_to_render = random_porn_url
     else
-      render json: "request for scary porn denied"
+      what_to_render = "request for scary porn denied"
     end
+
+    render json: what_to_render.to_json
   end
 
   # GET
   def redirect_to_random_porn
-    if request_from_local_network
+    if request_from_local_network?
       redirect_to random_porn_url[:file_path]
-    else
-      render json: "request for scary porn denied"
     end
   end
 
