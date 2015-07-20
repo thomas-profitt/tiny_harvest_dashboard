@@ -110,56 +110,78 @@ class ApiController < ApplicationController
 
 
   def sky_color_for_hours(hours = Time.now.hour + (Time.now.min / 60.0) + (Time.now.sec / 3600.0))
-    hue = 200
-    saturation = 50
-    lightness = 10
+    red = 13
+    green = 30
+    blue = 38
 
     case hours
     when 0..5, 23..24
-      lightness = 5
+      red = 2
+      green = 10
+      blue = 20
     when 5..12
-      saturation =
+      red =
         range_value_from_position(
-          100..52, range_position_from_value(5..12, hours))
-      lightness =
+          2..138, range_position_from_value(5..12, hours))
+      green =
         range_value_from_position(
-          5..70, range_position_from_value(5..12, hours))
+          10..191, range_position_from_value(5..12, hours))
+      blue =
+        range_value_from_position(
+          20..213, range_position_from_value(5..12, hours))
     when 12..15
-      saturation = 52
-      lightness =
+      red =
         range_value_from_position(
-          70..54, range_position_from_value(12..15, hours))
-    when 15..19
-      hue =
+          138..76, range_position_from_value(12..15, hours))
+      green =
         range_value_from_position(
-          200..168, range_position_from_value(15..19, hours))
-      saturation =
+          191..158, range_position_from_value(12..15, hours))
+      blue =
         range_value_from_position(
-          50..20, range_position_from_value(15..19, hours))
-      lightness =
+          213..198, range_position_from_value(12..15, hours))
+   when 15..19
+      red =
         range_value_from_position(
-          54..45, range_position_from_value(15..19, hours))
+          76..104, range_position_from_value(15..19, hours))
+      green =
+        range_value_from_position(
+          158..160, range_position_from_value(15..19, hours))
+      blue =
+        range_value_from_position(
+          198..138, range_position_from_value(15..19, hours))
     when 19..20
-      hue =
+      red =
         range_value_from_position(
-          40..20, range_position_from_value(19..20, hours))
-      saturation =
+          104..255, range_position_from_value(19..20, hours))
+      green =
         range_value_from_position(
-          20..30, range_position_from_value(19..20, hours))
-      lightness =
+          160..182, range_position_from_value(19..20, hours))
+      blue =
         range_value_from_position(
-          45..40, range_position_from_value(19..20, hours))
-    when 20..23
-      hue =
+          138..116, range_position_from_value(19..20, hours))
+    when 20..20.5
+      red =
         range_value_from_position(
-          20..30, range_position_from_value(20..23, hours))
-      saturation = 10
-      lightness =
+          255..28, range_position_from_value(20..20.5, hours))
+      green =
         range_value_from_position(
-          40..5, range_position_from_value(20..23, hours))
+          182..57, range_position_from_value(20..20.5, hours))
+      blue =
+        range_value_from_position(
+          116..68, range_position_from_value(20..20.5, hours))
+    when 20.5..23
+      red =
+        range_value_from_position(
+          28..2, range_position_from_value(20.5..23, hours))
+      green =
+        range_value_from_position(
+          57..10, range_position_from_value(20.5..23, hours))
+      blue =
+        range_value_from_position(
+          68..20, range_position_from_value(20.5..23, hours))
     end
 
-    color = "hsl(#{hue},#{saturation}%,#{lightness}%)"
+    color = "rgb(#{red.round},#{green.round},#{blue.round})"
     return color
   end
 
