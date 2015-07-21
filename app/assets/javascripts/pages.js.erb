@@ -1,27 +1,11 @@
 var updateInterval = 60000;
 
 $(document).ready( function() {
-<%#
-  $.ajax({
-    url: "/api/request_from_local_network.json",
-    dataType: "json",
-    success: function(data) {
-      if (data.responseJSON === true) {
-        changeBackgroundColor(new Date());
-        randomPornBackground();
-        window.setInterval(randomPornBackground, 40000);
-      } else {
-%>
   changeBackgroundColor();
   changeBackgroundImage('<%= image_path("bg5.png") %>');
   $("html").css("background-size", "cover");
   $("html").css("background-position", "top left");
   updateHarvestData(getURLParam("days"));
-<%#
-      }
-    }
-  });
-%>
 
   window.setInterval(function() {
     changeBackgroundColor(new Date());
@@ -74,19 +58,3 @@ function updateHarvestData() {
     }
   });
 }
-
-<%#
-function randomPornBackground() {
-  $.ajax({
-    url: "/api/random_porn.json",
-    dataType: "json",
-    success: function(data) {
-      changeBackgroundImage(data);
-      document.getElementById("download-background-image").href =
-        data;
-      $("html").css("background-size", "contain");
-      $("html").css("background-position", "bottom right");
-    }
-  });
-}
-%>

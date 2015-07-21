@@ -1,31 +1,6 @@
 class ApiController < ApplicationController
 
   # GET
-  def random_porn
-    what_to_render = ""
-
-    if request_from_local_network?
-      what_to_render = random_porn_url
-    else
-      what_to_render = "request for scary porn denied"
-    end
-
-    render json: what_to_render.to_json
-  end
-
-  # GET
-  def redirect_to_random_porn
-    if request_from_local_network?
-      redirect_to random_porn_url[:file_path]
-    end
-  end
-
-  # GET
-  def request_from_local_network
-    render json: request_from_local_network?.to_json
-  end
-
-  # GET
   def harvest_data
     harvest = Harvest.client(subdomain: ENV["HARVEST_SUBDOMAIN"],
                              username: ENV["HARVEST_USERNAME"],
@@ -211,48 +186,6 @@ class ApiController < ApplicationController
 
   def shift_range(range, shift)
     (range.first + shift)..(range.last + shift)
-  end
-
-  def random_porn_url
-    tag_whitelist = []
-    tag_blacklist =
-      ["female", "intersex", "breasts", "pussy", "scat", "fart",
-       "my_little_pony", "five_nights_at_freddy's", "blood", "mot",
-       "teenage_mutant_ninja_turtles"]
-
-    uri = URI "https://e621.net/post/show.json"
-
-    i = 0
-    already_tried = []
-    result = nil
-    until (result &&
-    (result["tags"].split(" ") & tag_blacklist).empty? &&
-    result["tags"].split(" ") & tag_whitelist == tag_whitelist &&
-    !(result["file_url"].blank?) &&
-    !(result["file_url"] == "/images/deleted-preview.png"))
-
-      random_id = rand(0..600000)
-      while already_tried.include? random_id
-        random_id = rand(0..600000)
-      end
-
-      uri.query = URI.encode_www_form({id: random_id})
-
-      begin
-        puts "Sending request ##{i + 1}"
-        result = JSON.parse Net::HTTP.get(uri)
-      rescue JSON::ParserError
-        result = nil
-      end
-      already_tried << random_id
-      i += 1
-    end
-
-    if params["full"]
-      return result
-    else
-      return result["file_url"]
-    end
   end
 
 end

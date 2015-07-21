@@ -5,7 +5,4 @@ Rails.application.routes.draw do
 
   get 'api/sky_color'
   get 'api/harvest_data'
-  get 'api/request_from_local_network' => 'api#request_from_local_network'
-  get 'api/random_porn'
-  get 'api/redirect_to_random_porn'
 end
