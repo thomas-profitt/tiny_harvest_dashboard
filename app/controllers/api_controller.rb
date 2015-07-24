@@ -43,7 +43,7 @@ class ApiController < ApplicationController
 
     hours_needed_today = 40 - hours_this_week
     unless today.friday? || today.sunday? || today.saturday?
-      if hours_needed_today > (8 + hours_owed)
+      if hours_needed_today < (8 + hours_owed)
         hours_needed_today = (8 + hours_owed)
       end
       hours_needed_today -= hours_today
