@@ -3,6 +3,8 @@
 <% end %>
 
 <script>
+  var hours = 0.0;
+
   $("div").each(function() {
     var thisDiv = this;
     $.ajax({
@@ -12,5 +14,19 @@
         $(thisDiv).css("background-color", data.responseJSON);
       }
     });
+  });
+
+  $(document).ready(function() {
+    $("body").append(
+      $("<input id='hours-range' type='range' min='0' max='24' step='0.05'></input>").css("width", "100vw"));
+      $("#hours-range").on("input", function() {
+        hours = parseFloat(this.value);
+        $("#test-hours")[0].innerHTML = hours;
+        changeBackgroundColor(hours);
+      });
+    $("body").append($("<span id='test-hours'></span>"));
+    window.clearInterval(intervalID);
+    $("html").css("transition", "none");
+    $("*").css("margin", "0");
   });
 </script>
