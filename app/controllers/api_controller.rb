@@ -136,26 +136,36 @@ class ApiController < ApplicationController
       blue =
         range_value_from_position(
           138..116, range_position_from_value(19..20, hours))
-    when 20..20.5
+    when 20..20.25
       red =
         range_value_from_position(
-          255..28, range_position_from_value(20..20.5, hours))
+          255..209, range_position_from_value(20..20.25, hours))
       green =
         range_value_from_position(
-          182..57, range_position_from_value(20..20.5, hours))
+          182..195, range_position_from_value(20..20.25, hours))
       blue =
         range_value_from_position(
-          116..68, range_position_from_value(20..20.5, hours))
+          116..185, range_position_from_value(20..20.25, hours))
+    when 20.25..20.5
+      red =
+        range_value_from_position(
+          209..71, range_position_from_value(20.25..20.5, hours))
+      green =
+        range_value_from_position(
+          195..103, range_position_from_value(20.25..20.5, hours))
+      blue =
+        range_value_from_position(
+          185..115, range_position_from_value(20.25..20.5, hours))
     when 20.5..23
       red =
         range_value_from_position(
-          28..2, range_position_from_value(20.5..23, hours))
+          75..2, range_position_from_value(20.5..23, hours))
       green =
         range_value_from_position(
-          57..10, range_position_from_value(20.5..23, hours))
+          103..10, range_position_from_value(20.5..23, hours))
       blue =
         range_value_from_position(
-          68..20, range_position_from_value(20.5..23, hours))
+          115..20, range_position_from_value(20.5..23, hours))
     end
 
     color = "rgb(#{red.round},#{green.round},#{blue.round})"
