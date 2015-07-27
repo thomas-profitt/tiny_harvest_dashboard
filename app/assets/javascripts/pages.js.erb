@@ -1,4 +1,5 @@
 var updateInterval = 60000;
+var intervalID = null;
 
 $(document).ready( function() {
   changeBackgroundColor();
@@ -7,8 +8,8 @@ $(document).ready( function() {
   $("html").css("background-position", "top left");
   updateHarvestData(getURLParam("days"));
 
-  window.setInterval(function() {
-    changeBackgroundColor(new Date());
+  intervalID = window.setInterval(function() {
+    changeBackgroundColor();
     updateHarvestData(getURLParam("days"));
   }, updateInterval);
 });
@@ -26,9 +27,19 @@ function changeBackgroundImage(url) {
   $("html").css("background-image", "url(\"" + url + "\")");
 }
 
-function changeBackgroundColor() {
+// Accepts hours as a date or number (0.0 to 24)
+function changeBackgroundColor(dateOrHours) {
+  if (typeof dateOrHours === typeof new Date()) {
+    var hours = dateOrHours.getHours() + (dateOrHours.getMinutes() / 60.0);
+  } else if (typeof dateOrHours === typeof 1.0) {
+    var hours = dateOrHours;
+  }
+  var url = "/api/sky_color.json"
+  if (typeof hours === typeof 1.0) {
+    url += "?hours=" + hours;
+  }
   $.ajax({
-    url:"/api/sky_color.json",
+    url:url,
     dataType:"json",
     complete: function(data) {
       $("html").css("background-color", data.responseJSON);
