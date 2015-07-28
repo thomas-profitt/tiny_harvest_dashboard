@@ -85,7 +85,7 @@ function updateColoredTextMode() {
   var oldColoredTextMode = coloredTextMode;
   var now = new Date();
 
-  if (now.getHours() >= 9 || now.getHours() <= 5) {
+  if (now.getHours() >= 21 || now.getHours() <= 5) {
     coloredTextMode = "night";
   } else {
     coloredTextMode = "day";
