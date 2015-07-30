@@ -44,7 +44,8 @@ html {
   transition:background-color 2s linear;
 }
 .time {
-  font-family:Roboto Mono;
+  font-family:"Roboto Mono", "Deja Vu Sans Mono",
+    "Bitstream Vera Sans Mono", "Menlo", "Monaco", "Monospace";
   text-align:center;
   line-height:1em;
   &.big {
