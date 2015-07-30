@@ -7,7 +7,7 @@
   <%= link_to "", params.merge({days: 0}),
     id: "today",
     class:
-      (params[:days] > 0 ? "back-to-today" : "forward-to-today") +
+      (params[:days] > 0 ? "back-to-today" : "forward-to-today") + " " +
       "colored-text-day" %>
 <% end %>
 
