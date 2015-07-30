@@ -11,7 +11,7 @@
       url:"/api/sky_color?hours=" + thisDiv.innerHTML,
       dataType:"json",
       complete: function(data) {
-        $(thisDiv).css("background-color", data.responseJSON);
+        $(thisDiv).css("background-color", data.responseJSON.sky_color);
       }
     });
   });
