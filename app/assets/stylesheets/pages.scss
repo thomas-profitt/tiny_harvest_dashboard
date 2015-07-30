@@ -52,6 +52,11 @@ html {
     font-weight:100;
   }
 }
+#times-and-projects {
+  margin:0;
+  margin-top:1em;
+  padding-left:4em;
+}
 .time-and-project {
   list-style-type:none;
   max-width:100%;
@@ -207,10 +212,10 @@ img {
 }
 @media only screen and (max-width:1024px) and (max-aspect-ratio:90/100) {
   #yesterday, #today, #tomorrow {
-    top:calc(40vh - 1em);
+    top:5em;
   }
   #today {
-    top:calc(40vh);
+    top:6em;
   }
   #human-today {
     top:0;
@@ -220,6 +225,11 @@ img {
   }
   #download-background-image {
     top:0;
+  }
+  #times-and-projects {
+    margin:0;
+    margin-top:1em;
+    padding-left:0;
   }
 }
 @media only screen and (max-width:1024px) and (min-aspect-ratio:90/100) {
