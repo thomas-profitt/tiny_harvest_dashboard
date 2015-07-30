@@ -46,7 +46,7 @@ function changeBackgroundColor(dateOrHours) {
     url:url,
     dataType:"json",
     complete: function(data) {
-      $("html").css("background-color", data.responseJSON);
+      $("html").css("background-color", data.responseJSON.sky_color);
     }
   });
 }

@@ -78,7 +78,7 @@ class ApiController < ApplicationController
       color = sky_color_for_hours
     end
 
-    render json: color.to_json
+    render json: {sky_color: color}.to_json
 
   end
 
