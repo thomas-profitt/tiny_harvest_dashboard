@@ -7,7 +7,7 @@ class ApiController < ApplicationController
                              password: ENV["HARVEST_PASSWORD"])
 
     today = Date.today
-    today -= 1.day if Time.now.hour < 7
+    today -= 1.day if its_really_tomorrow
     today += params[:days].to_i.days
     human_today = today.to_time.strftime("%A, #{today.to_time.day.ordinalize}")
 
@@ -17,9 +17,7 @@ class ApiController < ApplicationController
       harvest_time_data = harvest.time.all(date)
       total_hours_this_date = harvest_time_data.map{|x| x[:hours] }.inject(:+)
       { date: date,
-        hours: (harvest_time_data.map{ |x| {x[:project] => x[:hours]} } <<
-          { "Total" => total_hours_this_date || 0 }).
-          inject(:merge)
+        hours: (harvest_time_data.map{ |x| {x[:project] => x[:hours]} } << { "Total" => total_hours_this_date || 0 }).inject(:merge)
       }
     end
 
@@ -38,19 +36,23 @@ class ApiController < ApplicationController
     hours_today = days_and_hours_this_week.last[:hours]["Total"]
     hours_today ||= 0
 
-    hours_owed =  (8 * (days_and_hours_this_week.length - 1)) -
+    hours_owed =
+      (8 * (days_and_hours_this_week.length - 1)) -
       (hours_this_week - hours_today)
 
-    hours_needed_today = 40 - hours_this_week
+
+    # hours_needed_today now reflects how many hours, total, were needed today,
+    # not counting hours logged today.
+    # Later, hours_today is subtracted from it.
+    hours_needed_today = 40 - (hours_this_week - hours_today)
     unless today.friday? || today.sunday? || today.saturday?
       if hours_needed_today > (8 + hours_owed)
         hours_needed_today = (8 + hours_owed)
       end
-      hours_needed_today -= hours_today
     end
+    hours_needed_today -= hours_today
     hours_needed_today = 0 if hours_needed_today < 0
 
-    done_at = nil
     if hours_needed_today > 0
       done_at = (Time.now + hours_needed_today.hours).strftime("%02l:%M")
     else
@@ -85,6 +87,9 @@ class ApiController < ApplicationController
 
   private ######################################################################
 
+  def its_really_tomorrow
+    Time.now.hour < 7
+  end
 
   def sky_color_for_hours(hours = Time.now.hour + (Time.now.min / 60.0) + (Time.now.sec / 3600.0))
     red = 13
