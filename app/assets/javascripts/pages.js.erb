@@ -51,42 +51,48 @@ function stopSpinner() {
 }
 
 function transition(direction) {
+  var transitionTime = 750;
   // all, not transform, is used because Safari is weird
-  var transition = "all 0.75s ease-out";
+  var transition = "all " + transitionTime + "ms ease";
+  var selector = "body *:not(.static)";
   var transformSequence = null;
-
   if (direction === "left") {
     transformSequence = ["translateX(100vw)", "translateX(-100vw)", "none"];
   }
-  if (direction ==="right") {
+  if (direction === "right") {
     transformSequence = ["translateX(-100vw)", "translateX(100vw)", "none"];
   }
-
+  if (direction === "up") {
+    transformSequence = ["translateY(100vh)", "translateY(-100vh)", "none"];
+  }
+  if (direction === "down") {
+    transformSequence = ["translateY(-100vh)", "translateY(100vh)", "none"];
+  }
   if (transformSequence === null) {
     return false;
   }
 
   $("html").css("overflow", "hidden");
 
-  $("body *:not(.static)").css("transition", transition);
-  $("body *:not(.static)").css("transform", transformSequence[0]);
+  $(selector).css("transition", transition);
+  $(selector).css("transform", transformSequence[0]);
 
   setTimeout(function() {
-    $("body *:not(.static)").css("transition", "none");
-    $("body *:not(.static)").css("transform", transformSequence[1]);
-  }, 750);
+    $(selector).css("transition", "none");
+    $(selector).css("transform", transformSequence[1]);
+  }, transitionTime);
 
   setTimeout(function() {
-    $("body *:not(.static)").css("transition", transition);
-    $("body *:not(.static)").css("transform", transformSequence[2]);
-  }, 1000);
+    $(selector).css("transition", transition);
+    $(selector).css("transform", transformSequence[2]);
+  }, transitionTime + 125);
 
   setTimeout(function() {
-    $("body *:not(.static)").css("overflow", "inherit");
+    $(selector).css("overflow", "inherit");
 
-    $("body *:not(.static)").css("transition", "none");
+    $(selector).css("transition", "none");
     $("html").css("overflow", "inherit");
-  }, 1750);
+  }, (transitionTime * 2) + 125);
 }
 
 function setDays(newDays) {
