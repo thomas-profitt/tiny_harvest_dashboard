@@ -51,7 +51,8 @@ function stopSpinner() {
 }
 
 function transition(direction) {
-  var transition = "transform 0.75s ease-out";
+  // all, not transform, is used because Safari is weird
+  var transition = "all 0.75s ease-out";
   var transformSequence = null;
 
   if (direction === "left") {
@@ -67,25 +68,25 @@ function transition(direction) {
 
   $("html").css("overflow", "hidden");
 
-  $("body *:not(.static)*").css("transition", transition);
-  $("body *:not(.static)*").css("transform", transformSequence[0]);
+  $("body *:not(.static)").css("transition", transition);
+  $("body *:not(.static)").css("transform", transformSequence[0]);
 
   setTimeout(function() {
-    $("body *:not(.static)*").css("transition", "none");
-    $("body *:not(.static)*").css("transform", transformSequence[1]);
-
-    setTimeout(function() {
-      $("body *:not(.static)*").css("transition", transition);
-      $("body *:not(.static)*").css("transform", transformSequence[2]);
-
-      setTimeout(function() {
-        $("body *:not(.static)*").css("overflow", "inherit");
-
-        $("body *:not(.static)*").css("transition", "none");
-        $("body *:not(.static)*").css("overflow", "inherit");
-      }, 750);
-    }, 250);
+    $("body *:not(.static)").css("transition", "none");
+    $("body *:not(.static)").css("transform", transformSequence[1]);
   }, 750);
+
+  setTimeout(function() {
+    $("body *:not(.static)").css("transition", transition);
+    $("body *:not(.static)").css("transform", transformSequence[2]);
+  }, 1000);
+
+  setTimeout(function() {
+    $("body *:not(.static)").css("overflow", "inherit");
+
+    $("body *:not(.static)").css("transition", "none");
+    $("html").css("overflow", "inherit");
+  }, 1750);
 }
 
 function setDays(newDays) {
