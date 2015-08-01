@@ -51,7 +51,7 @@ function stopSpinner() {
 }
 
 function transition(direction) {
-  var transition = "transform 0.5s cubic-bezier(0.08, 0.82, 0.17, 1)";
+  var transition = "transform 0.75s ease-out";
   var transformSequence = null;
 
   if (direction === "left") {
@@ -83,9 +83,9 @@ function transition(direction) {
 
         $("body *:not(.static)*").css("transition", "none");
         $("body *:not(.static)*").css("overflow", "inherit");
-      }, 500);
+      }, 750);
     }, 250);
-  }, 500);
+  }, 750);
 }
 
 function setDays(newDays) {
