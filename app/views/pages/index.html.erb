@@ -1,22 +1,15 @@
-<%= link_to "", params.merge({days: params[:days] - 1}),
-  id: "yesterday", class:"colored-text-day" %>
+<%= link_to "", "#", id: "yesterday", class:"colored-text-day static" %>
 
 <span id="human-today" class="colored-text-day">Loading…</span>
 
-<% if params[:days] && params[:days] != 0 %>
-  <%= link_to "", params.merge({days: 0}),
-    id: "today",
-    class:
-      (params[:days] > 0 ? "back-to-today" : "forward-to-today") + " " +
-      "colored-text-day" %>
-<% end %>
+<%= link_to "", "#", id: "today", class: "colored-text-day static" %>
 
-<a id="download-background-image" class="colored-text-day" href="#" target="_blank" download>
+<a id="download-background-image" class="colored-text-day static"
+  href="#" target="_blank" download>
   Download Image
 </a>
 
-<%= link_to "", params.merge({days: params[:days] + 1}),
-  id: "tomorrow", class:"colored-text-day" %>
+<%= link_to "", "#", id: "tomorrow", class:"colored-text-day static" %>
 
 <div class="div-container">
   <div>

@@ -1,11 +1,6 @@
 class PagesController < ApplicationController
 
   def index
-    if params[:days]
-      params[:days] = params[:days].to_i
-    else
-      params[:days] = 0
-    end
   end
 
   def sky_color_test

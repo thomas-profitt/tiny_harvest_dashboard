@@ -3,17 +3,40 @@ var coloredTextMode = "day";
 var updateInterval = 60000;
 var intervalID = null;
 
+var days = 0;
+
 $(document).ready( function() {
   changeBackgroundColor();
   changeBackgroundImage('<%= image_path("bg5.png") %>');
   $("html").css("background-size", "cover");
   $("html").css("background-position", "top left");
-  updateHarvestData(getURLParam("days"));
+  updateHarvestData();
   updateColoredTextMode();
+
+  var paramsDays = parseInt(getURLParam("days"));
+  if (isNaN(paramsDays)) {
+    paramsDays = 0;
+  }
+  setDays(paramsDays);
+
+  $("#yesterday").click(function(e) {
+    setDays(days - 1);
+    e.preventDefault();
+  });
+
+  $("#tomorrow").click(function(e) {
+    setDays(days + 1);
+    e.preventDefault();
+  });
+
+  $("#today").click(function(e) {
+    setDays(0);
+    e.preventDefault();
+  });
 
   intervalID = window.setInterval(function() {
     changeBackgroundColor();
-    updateHarvestData(getURLParam("days"));
+    updateHarvestData();
     updateColoredTextMode();
   }, updateInterval);
 });
@@ -25,6 +48,77 @@ function startSpinner() {
 
 function stopSpinner() {
   changeBackgroundColor();
+}
+
+function transition(direction) {
+  var transformSequence = null
+
+  if (direction === "left") {
+    transformSequence = ["translateX(100vw)", "translateX(-100vw)", "none"];
+  }
+  if (direction ==="right") {
+    transformSequence = ["translateX(-100vw)", "translateX(100vw)", "none"];
+  }
+
+  if (transformSequence === null) {
+    return false;
+  }
+
+  $("html").css("overflow", "hidden");
+
+  $("body *:not(.static)*").css("transition", "transform 0.5s ease");
+  $("body *:not(.static)*").css("transform", transformSequence[0]);
+
+  setTimeout(function() {
+    $("body *:not(.static)*").css("transition", "none");
+    $("body *:not(.static)*").css("transform", transformSequence[1]);
+
+    setTimeout(function() {
+      $("body *:not(.static)*").css("transition", "transform 0.5s ease");
+      $("body *:not(.static)*").css("transform", transformSequence[2]);
+
+      setTimeout(function() {
+        $("body *:not(.static)*").css("overflow", "inherit");
+
+        $("body *:not(.static)*").css("transition", "none");
+        $("body *:not(.static)*").css("overflow", "inherit");
+      }, 500);
+    }, 250);
+  }, 500);
+}
+
+function setDays(newDays) {
+  var oldDays = days;
+  days = newDays;
+
+  if (newDays < oldDays) {
+    transition("left");
+  }
+  if (newDays > oldDays) {
+    transition("right");
+  }
+
+  clearTodayClasses();
+  if (!(newDays === 0)) {
+    var newClass = "";
+    if (newDays < 0) {
+      newClass = "forward-to-today";
+    } else {
+      newClass = "back-to-today";
+    }
+    $("#today")[0].classList.add(newClass);
+  }
+
+  setTimeout(function() {
+    clearHarvestData();
+  }, 500);
+
+  updateHarvestData();
+}
+
+function clearTodayClasses() {
+  $("#today")[0].classList.remove("back-to-today");
+  $("#today")[0].classList.remove("forward-to-today");
 }
 
 function changeBackgroundImage(url) {
@@ -51,9 +145,17 @@ function changeBackgroundColor(dateOrHours) {
   });
 }
 
+function clearHarvestData() {
+  $("#human-today").html("Loading…");
+  $("#hours-today").html("XX:XX");
+  $("#hours-needed-today").html("XX:XX");
+  $("#done-at").html("XX:XX");
+  $("#times-and-projects").empty();
+}
+
 function updateHarvestData() {
   $.ajax({
-    url:"/api/harvest_data.json?days=" + getURLParam("days"),
+    url:"/api/harvest_data.json?days=" + days,
     dataType:"json",
     complete: function(data) {
       var response = data.responseJSON;
