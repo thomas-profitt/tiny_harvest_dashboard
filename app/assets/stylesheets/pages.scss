@@ -10,6 +10,9 @@
   text-shadow:0px 0px 1.5px $text-shadow;
   box-sizing:border-box;
   transition: color 0.25s cubic-bezier(1,2.22,1,-1.43) 2s;
+  *:focus {
+    outline: none;
+  }
 }
 
 .colored-text-day {
