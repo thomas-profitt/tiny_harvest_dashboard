@@ -54,6 +54,8 @@ GEM
     execjs (2.5.2)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
+    haml (4.0.6)
+      tilt
     harvested (3.1.1)
       hashie
       httparty
@@ -148,6 +150,7 @@ PLATFORMS
 DEPENDENCIES
   colorize
   dotenv-rails
+  haml
   harvested
   jquery-rails
   pry-nav

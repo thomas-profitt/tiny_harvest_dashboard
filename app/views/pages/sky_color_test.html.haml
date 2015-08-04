@@ -1,22 +1,22 @@
-<% @times.each do |hours| %>
-  <div style="float:left;display:inline-block;padding:0 0.5em;width:<%= 100 / @times.to_a.length.to_f %>%;font-size:0.01em;height:10vh;"><%= hours %></div>
-<% end %>
+- @times.each do |hours|
+  %div{style: "float:left;display:inline-block;padding:0 0.5em;width:#{ 100 / @times.to_a.length.to_f };font-size:0.01em;height:10vh;"} = hours
 
-<script>
+:javascript
   var hours = 0.0;
 
-  $("div").each(function() {
-    var thisDiv = this;
-    $.ajax({
-      url:"/api/sky_color?hours=" + thisDiv.innerHTML,
-      dataType:"json",
-      complete: function(data) {
-        $(thisDiv).css("background-color", data.responseJSON.sky_color);
-      }
-    });
-  });
-
   $(document).ready(function() {
+
+    $("div").each(function() {
+      var thisDiv = this;
+      $.ajax({
+        url:"/api/sky_color?hours=" + thisDiv.innerHTML,
+        dataType:"json",
+        complete: function(data) {
+          $(thisDiv).css("background-color", data.responseJSON.sky_color);
+        }
+      });
+    });
+
     $("body").append(
       $("<input id='hours-range' type='range' min='0' max='24' step='0.05'></input>").css("width", "100vw"));
       $("#hours-range").on("input", function() {
@@ -29,4 +29,3 @@
     $("html").css("transition", "none");
     $("*").css("margin", "0");
   });
-</script>

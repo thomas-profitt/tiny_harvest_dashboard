@@ -10,6 +10,8 @@ gem 'turbolinks'
 gem 'harvested'
 gem 'dotenv-rails'
 
+gem 'haml'
+
 group :development, :test do
   gem 'spring'
 
