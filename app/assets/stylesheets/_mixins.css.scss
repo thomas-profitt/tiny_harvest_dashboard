@@ -50,7 +50,6 @@
   #times-and-projects {
     margin:0;
     margin-top:1em;
-    padding-left:0;
   }
 }
 
@@ -62,6 +61,8 @@
 @mixin medium {
   @include wide;
   @include short-arrow-labels;
+  @include fixed-arrows;
+  @include times-and-projects-no-padding;
 }
 
 @mixin medium-short {
@@ -71,11 +72,14 @@
 @mixin medium-tall {
   @include wide-tall;
   @include short-arrow-labels;
+  @include fixed-arrows;
+  @include times-and-projects-no-padding;
 }
 
 @mixin wide {
   @include long-arrow-labels;
   @include centered-arrows;
+  @include times-and-projects-padding;
   .div-container {
     width:13em;
     div {
@@ -114,9 +118,6 @@
     left:0;
     width:100vw;
   }
-  #times-and-projects {
-    padding-left:4em;
-  }
 }
 
 @mixin wide-tall {
@@ -129,20 +130,38 @@
 @mixin wide-short {
   @include wide;
   @include landscape;
+  body {
+    margin-top:3em;
+  }
   * {
     font-size:12pt;
   }
   .div-container {
     width:800px;
   }
+  #times-and-projects {
+    width:800px;
+    margin-right:auto;
+    margin-left:auto;
+  }
+}
+
+@mixin times-and-projects-padding {
+  #times-and-projects {
+    padding-left:4em;
+  }
+}
+
+@mixin times-and-projects-no-padding {
+  #times-and-projects {
+    padding-left:0;
+  }
 }
 
 @mixin landscape {
   @include short-arrow-labels;
   @include centered-arrows;
-  body {
-    margin-top:2em;
-  }
+  @include times-and-projects-padding;
   * {
     font-size:2vw;
   }
@@ -157,9 +176,6 @@
       width:30%;
       overflow:hidden;
     }
-  }
-  #times-and-projects {
-    margin-left:2em;
   }
   li {
     width:50%;
@@ -199,6 +215,7 @@
 }
 
 @mixin pages {
+  @include times-and-projects-no-padding;
   * {
     font-family: Helvetica Neue, Helvetica, Arial, Sans-Serif;
     color:$text;
