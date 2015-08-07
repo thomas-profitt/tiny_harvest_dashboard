@@ -1,0 +1,295 @@
+@mixin tiny {
+  @include narrow;
+  /* FIXME: !important is only necessary because of the AJAX color changes */
+  html {
+    background-color:$optimized-readability-background !important;
+    background-image:none !important;
+  }
+}
+
+@mixin narrow {
+  @include short-arrow-labels;
+  @include fixed-arrows;
+  * {
+    font-size:5vw;
+  }
+  html {
+    font-size:2.5em;
+    height:100vh;
+  }
+  .div-container {
+    height:100%;
+    margin-top:0;
+    max-width:calc(100% - 6em);
+    div, div:first-child, div:last-child {
+      background:none;
+      border:none;
+    }
+  }
+  #download-background-image {
+    position:inherit;
+    display:block;
+    text-align:right;
+    height:1em;
+  }
+  #yesterday, .back-to-today {
+    left:0;
+  }
+  #tomorrow, .forward-to-today {
+    right:0;
+  }
+  #human-today {
+    top:0;
+    padding-left:10px;
+    text-align:left;
+    font-size:150%;
+  }
+  #download-background-image {
+    top:0;
+  }
+  #times-and-projects {
+    margin:0;
+    margin-top:1em;
+    padding-left:0;
+  }
+}
+
+@mixin narrow-short {
+  @include narrow;
+  @include landscape;
+}
+
+@mixin medium {
+  @include wide;
+  @include short-arrow-labels;
+}
+
+@mixin medium-short {
+  @include narrow-short;
+}
+
+@mixin medium-tall {
+  @include wide-tall;
+  @include short-arrow-labels;
+}
+
+@mixin wide {
+  @include long-arrow-labels;
+  @include centered-arrows;
+  .div-container {
+    width:13em;
+    div {
+      background-color:$cell-background-light;
+      border-top-width:2px;
+      border-bottom-width:2px;
+      border-top-style:solid;
+      border-bottom-style:solid;
+      border-top-color:$cell-border-light-on-light;
+      border-bottom-color:$cell-border-dark-on-light;
+
+      &:first-child, &:last-child {
+        border-top-left-radius:1em;
+        border-top-right-radius:3px;
+        background-color:$cell-background-dark;
+        border-top-width:3px;
+        border-top-color:$cell-border-light-on-dark;
+        border-bottom-color:$cell-border-dark-on-dark;
+      }
+      &:last-child {
+        border-top-left-radius:0;
+        border-top-right-radius:0;
+        border-bottom-right-radius:1em;
+        border-bottom-left-radius:3px;
+        border-bottom-width:3px;
+        border-top-color:$cell-border-less-light-on-dark;
+        border-bottom-color:$cell-border-less-dark-on-dark;
+      }
+    }
+  }
+  #human-today {
+    display:block;
+    text-align:center;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100vw;
+  }
+  #times-and-projects {
+    padding-left:4em;
+  }
+}
+
+@mixin wide-tall {
+  @include wide;
+  .div-container {
+    margin-top:15%;
+  }
+}
+
+@mixin wide-short {
+  @include wide;
+  @include landscape;
+  * {
+    font-size:12pt;
+  }
+  .div-container {
+    width:800px;
+  }
+}
+
+@mixin landscape {
+  @include short-arrow-labels;
+  @include centered-arrows;
+  body {
+    margin-top:2em;
+  }
+  * {
+    font-size:2vw;
+  }
+  .div-container {
+    height:100%;
+    width:100%;
+    margin-top:0;
+    div, div:first-child, div:last-child {
+      background:none;
+      border:none;
+      display:inline-block;
+      width:30%;
+      overflow:hidden;
+    }
+  }
+  #times-and-projects {
+    margin-left:2em;
+  }
+  li {
+    width:50%;
+    display:inline-block;
+    float:left;
+  }
+}
+
+@mixin long-arrow-labels {
+  .forward-to-today:before, .back-to-today:after {
+    content:"Today";
+  }
+}
+
+@mixin short-arrow-labels {
+  .forward-to-today:before, .back-to-today:after {
+    content:"T";
+  }
+}
+
+@mixin fixed-arrows {
+  #yesterday, #today, #tomorrow {
+    top:5em;
+  }
+  #today {
+    top:6em;
+  }
+}
+
+@mixin centered-arrows {
+  #yesterday, #today, #tomorrow {
+    top:calc(50vh - 1em);
+  }
+  #today {
+    top:50vh;
+  }
+}
+
+@mixin pages {
+  * {
+    font-family: Helvetica Neue, Helvetica, Arial, Sans-Serif;
+    color:$text;
+    text-shadow:0px 0px 1.5px $text-shadow;
+    box-sizing:border-box;
+    transition: color 0.25s cubic-bezier(1,2.22,1,-1.43) 2s;
+    *:focus {
+      outline: none;
+    }
+  }
+  html {
+    background-size:contain;
+    background-position:right bottom;
+    background-attachment:fixed;
+    background-repeat:no-repeat;
+    width:100%;
+    height:100%;
+    background-color:$background;
+    font-size:1.5rem;
+    transition:background-color 2s linear;
+  }
+  .time {
+    font-family:"Roboto Mono", "Deja Vu Sans Mono",
+      "Bitstream Vera Sans Mono", "Menlo", "Monaco", "Monospace";
+    text-align:center;
+    line-height:1em;
+    &.big {
+      font-size:350%;
+      font-weight:100;
+    }
+  }
+  #times-and-projects {
+    margin:0;
+    margin-top:1em;
+  }
+  .time-and-project {
+    list-style-type:none;
+    max-width:100%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .div-container {
+    display:block;
+    margin-top:3em;
+    margin-right:auto;
+    margin-left:auto;
+    div {
+      padding:6px;
+      span {
+        display:block;
+      }
+      span:not(.time) {
+        display:block;
+        &:last-child {
+          text-align:right;
+        }
+      }
+    }
+  }
+  a {
+    text-decoration:underline;
+  }
+  #yesterday, #today, #tomorrow {
+    position:fixed;
+    text-decoration:none;
+    font-size:2em;
+  }
+  #yesterday, .back-to-today {
+    left:0.5em;
+    &:before {
+      content:"〈";
+    }
+  }
+  #tomorrow, .forward-to-today {
+    right:0.5em;
+    &:after {
+      content:"〉";
+    }
+  }
+  #download-background-image {
+    position:absolute;
+    top:10px;
+    right:10px;
+  }
+  #download-background-image[href="#"] {
+    display:none;
+  }
+  #human-today {
+    font-size:2em;
+    max-width:100%;
+  }
+}
+

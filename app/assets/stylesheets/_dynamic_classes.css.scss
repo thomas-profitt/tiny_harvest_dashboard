@@ -1,0 +1,22 @@
+@import 'colors';
+
+.colored-text-day {
+  color:$colored-text-day;
+  &#done-at {
+    color:$done-at-day;
+  }
+  &a {
+    color:$active-day;
+  }
+}
+
+.colored-text-night {
+  color:$colored-text-night;
+  &#done-at {
+    color:$done-at-night;
+  }
+  &a {
+    color:$active-night;
+  }
+}
+

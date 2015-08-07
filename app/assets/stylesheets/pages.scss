@@ -3,268 +3,38 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import 'colors';
+@import 'lengths';
+@import 'mixins';
 
-* {
-  font-family: Helvetica Neue, Helvetica, Arial, Sans-Serif;
-  color:$text;
-  text-shadow:0px 0px 1.5px $text-shadow;
-  box-sizing:border-box;
-  transition: color 0.25s cubic-bezier(1,2.22,1,-1.43) 2s;
-  *:focus {
-    outline: none;
-  }
+@include pages;
+
+@media only screen and (max-width:$tiny-width) {
+  @include tiny;
 }
 
-.colored-text-day {
-  color:$colored-text-day;
-  &#done-at {
-    color:$done-at-day;
-  }
-  &a {
-    color:$active-day;
-  }
+@media only screen and (min-width:($tiny-width + 1px)) and (max-width:$narrow-width) and (min-aspect-ratio:90/100) {
+  @include narrow-short;
+}
+@media only screen and (min-width:($tiny-width + 1px)) and (max-width:$narrow-width) and (max-aspect-ratio:90/100) {
+  @include narrow;
 }
 
-.colored-text-night {
-  color:$colored-text-night;
-  &#done-at {
-    color:$done-at-night;
-  }
-  &a {
-    color:$active-night;
-  }
+@media only screen and (min-width:($narrow-width + 1px)) and (max-width:$medium-width) and (max-height:$narrow-width) {
+  @include medium-short;
+}
+@media only screen and (min-width:($narrow-width + 1px)) and (max-width:$medium-width) and (min-height:($narrow-width + 1px)) and (max-height:$medium-width) {
+  @include medium;
+}
+@media only screen and (min-width:($narrow-width + 1px)) and (max-width:$medium-width) and (min-height:($medium-width + 1px)) {
+  @include medium-tall;
 }
 
-html {
-  background-size:contain;
-  background-position:right bottom;
-  background-attachment:fixed;
-  background-repeat:no-repeat;
-  width:100%;
-  height:100%;
-  background-color:$background;
-  font-size:1.5rem;
-  transition:background-color 2s linear;
+@media only screen and (min-width:($medium-width + 1px)) and (max-height:$narrow-width) {
+  @include wide-short;
 }
-.time {
-  font-family:"Roboto Mono", "Deja Vu Sans Mono",
-    "Bitstream Vera Sans Mono", "Menlo", "Monaco", "Monospace";
-  text-align:center;
-  line-height:1em;
-  &.big {
-    font-size:350%;
-    font-weight:100;
-  }
+@media only screen and (min-width:($medium-width + 1px)) and (min-height:($narrow-width + 1px)) and (max-height:$medium-width) {
+  @include wide;
 }
-#times-and-projects {
-  margin:0;
-  margin-top:1em;
-  padding-left:4em;
+@media only screen and (min-width:($medium-width + 1px)) and (min-height:($medium-width + 1px)) {
+  @include wide-tall;
 }
-.time-and-project {
-  list-style-type:none;
-  max-width:100%;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-.div-container {
-  display:block;
-  width:13em;
-  margin-top:15%;
-  margin-right:auto;
-  margin-left:auto;
-  div {
-    padding:6px;
-    background-color:$cell-background-light;
-    border-top-width:2px;
-    border-bottom-width:2px;
-    border-top-style:solid;
-    border-bottom-style:solid;
-    border-top-color:$cell-border-light-on-light;
-    border-bottom-color:$cell-border-dark-on-light;
-    span {
-      display:block;
-    }
-    span:not(.time) {
-      display:block;
-      &:last-child {
-        text-align:right;
-      }
-    }
-    &:first-child, &:last-child {
-      border-top-left-radius:1em;
-      border-top-right-radius:3px;
-      background-color:$cell-background-dark;
-      border-top-width:3px;
-      border-top-color:$cell-border-light-on-dark;
-      border-bottom-color:$cell-border-dark-on-dark;
-    }
-    &:last-child {
-      border-top-left-radius:0;
-      border-top-right-radius:0;
-      border-bottom-right-radius:1em;
-      border-bottom-left-radius:3px;
-      border-bottom-width:3px;
-      border-top-color:$cell-border-less-light-on-dark;
-      border-bottom-color:$cell-border-less-dark-on-dark;
-    }
-  }
-}
-a {
-  text-decoration:underline;
-}
-#yesterday, #today, #tomorrow {
-  text-decoration:none;
-  position:fixed;
-  top:calc(50vh - 1em);
-  font-size:2em;
-}
-#today {
-  top:50vh;
-}
-#yesterday, .back-to-today {
-  left:0.5em;
-  &:before {
-    content:"〈";
-  }
-}
-.back-to-today {
-  &:after {
-    content:"Today";
-  }
-}
-#tomorrow, .forward-to-today {
-  right:0.5em;
-  &:after {
-    content:"〉";
-  }
-}
-.forward-to-today {
-  &:before {
-    content:"Today";
-  }
-}
-#download-background-image {
-  position:absolute;
-  top:10px;
-  right:10px;
-}
-img {
-  display:none;
-}
-#download-background-image[href="#"] {
-  display:none;
-}
-#human-today {
-  display:block;
-  font-size:2em;
-  text-align:center;
-  position:absolute;
-  width:100vw;
-  max-width:100%;
-  top:0;
-  left:0;
-}
-
-@media only screen and (max-width:480px) , only screen and (max-height:480px) {
-  html {
-    font-size:2.5em;
-    height:100vh;
-  }
-  .div-container {
-    height:100%;
-    margin-top:0;
-    div, div:first-child, div:last-child {
-      background:none;
-      border:none;
-    }
-  }
-  #download-background-image {
-    position:inherit;
-    display:block;
-    text-align:right;
-    height:1em;
-  }
-  #yesterday, .back-to-today {
-    left:0;
-  }
-  .back-to-today {
-    &:after {
-      content:"T";
-    }
-  }
-  #tomorrow, .forward-to-today {
-    right:0;
-  }
-  .forward-to-today {
-    &:before {
-      content:"T";
-    }
-  }
-}
-@media only screen and (max-height:800px) and (min-height:480px) {
-  .div-container {
-    margin-top:3em;
-  }
-}
-@media only screen and (max-width:480px) , only screen and (min-width:240px) and (max-height:480px) {
-  body {
-    margin-top:2em;
-  }
-  html {
-    font-size:5vw;
-  }
-}
-@media only screen and (max-width:480px) and (max-aspect-ratio:90/100) {
-  #yesterday, #today, #tomorrow {
-    top:5em;
-  }
-  #today {
-    top:6em;
-  }
-  #human-today {
-    top:0;
-    padding-left:10px;
-    text-align:left;
-    font-size:150%;
-  }
-  #download-background-image {
-    top:0;
-  }
-  #times-and-projects {
-    margin:0;
-    margin-top:1em;
-    padding-left:0;
-  }
-}
-@media only screen and (min-width:240px) and (max-width:800px) and (min-aspect-ratio:90/100) , only screen and (min-width:240px) and (max-height:480px) {
-  html {
-    font-size:2vw;
-  }
-  .div-container {
-    height:100%;
-    width:100%;
-    margin-top:0;
-    div, div:first-child, div:last-child {
-      background:none;
-      border:none;
-      display:inline-block;
-      width:30%;
-      overflow:hidden;
-    }
-  }
-  li {
-    width:50%;
-    display:inline-block;
-    float:left;
-  }
-}
-@media only screen and (max-width:240px) {
-  /* FIXME: !important is only necessary because of the AJAX color changes */
-  html {
-    background-color:$optimized-readability-background !important;
-    background-image:none !important;
-  }
-}
-
