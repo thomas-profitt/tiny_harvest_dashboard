@@ -40,8 +40,7 @@ class ApiController < ApplicationController
       (8 * (days_and_hours_this_week.length - 1)) -
       (hours_this_week - hours_today)
 
-
-    # hours_needed_today now reflects how many hours, total, were needed today,
+    # hours_needed_today now reflects how many hours total were needed today,
     # not counting hours logged today.
     # Later, hours_today is subtracted from it.
     hours_needed_today = 40 - (hours_this_week - hours_today)
@@ -53,7 +52,10 @@ class ApiController < ApplicationController
     hours_needed_today -= hours_today
     hours_needed_today = 0 if hours_needed_today < 0
 
-    if hours_needed_today > 0
+    if today != Date.today
+      # If it's not today, a done_at estimate means nothing.
+      done_at = "-N/A-"
+    elsif hours_needed_today > 0
       done_at = (Time.now + hours_needed_today.hours).strftime("%02l:%M")
     else
       done_at = "DONE!"
