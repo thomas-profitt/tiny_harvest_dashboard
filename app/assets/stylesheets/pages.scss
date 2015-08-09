@@ -8,33 +8,57 @@
 
 @include pages;
 
-@media only screen and (max-width:$tiny-width) {
+@media only screen
+and (max-width:$tiny-width) {
   @include tiny;
 }
 
-@media only screen and (min-width:($tiny-width + 1px)) and (max-width:$narrow-width) and (min-aspect-ratio:90/100) {
+@media only screen
+and (min-width:($tiny-width + 1px))
+and (max-width:$narrow-width)
+and (min-aspect-ratio:90/100) {
   @include narrow-short;
 }
-@media only screen and (min-width:($tiny-width + 1px)) and (max-width:$narrow-width) and (max-aspect-ratio:90/100) {
+@media only screen
+and (min-width:($tiny-width + 1px))
+and (max-width:$narrow-width)
+and (max-aspect-ratio:90/100) {
   @include narrow;
 }
 
-@media only screen and (min-width:($narrow-width + 1px)) and (max-width:$medium-width) and (max-height:$narrow-width) {
+@media only screen
+and (min-width:($narrow-width + 1px))
+and (max-width:$medium-width)
+and (max-height:$medium-short-height) {
   @include medium-short;
 }
-@media only screen and (min-width:($narrow-width + 1px)) and (max-width:$medium-width) and (min-height:($narrow-width + 1px)) and (max-height:$medium-width) {
+@media only screen
+and (min-width:($narrow-width + 1px))
+and (max-width:$medium-width)
+and (min-height:($medium-short-height + 1px))
+and (max-height:$medium-height) {
   @include medium;
 }
-@media only screen and (min-width:($narrow-width + 1px)) and (max-width:$medium-width) and (min-height:($medium-width + 1px)) {
+@media only screen
+and (min-width:($narrow-width + 1px))
+and (max-width:$medium-width)
+and (min-height:($medium-height + 1px)) {
   @include medium-tall;
 }
 
-@media only screen and (min-width:($medium-width + 1px)) and (max-height:$narrow-width) {
+@media only screen
+and (min-width:($medium-width + 1px))
+and (max-height:$wide-short-height) {
   @include wide-short;
 }
-@media only screen and (min-width:($medium-width + 1px)) and (min-height:($narrow-width + 1px)) and (max-height:$medium-width) {
+@media only screen
+and (min-width:($medium-width + 1px))
+and (min-height:($wide-short-height + 1px))
+and (max-height:$wide-tall-height) {
   @include wide;
 }
-@media only screen and (min-width:($medium-width + 1px)) and (min-height:($medium-width + 1px)) {
+@media only screen
+and (min-width:($medium-width + 1px))
+and (min-height:($wide-tall-height + 1px)) {
   @include wide-tall;
 }
