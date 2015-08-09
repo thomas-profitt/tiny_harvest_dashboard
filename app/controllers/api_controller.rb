@@ -52,7 +52,7 @@ class ApiController < ApplicationController
     hours_needed_today -= hours_today
     hours_needed_today = 0 if hours_needed_today < 0
 
-    if today != Date.today
+    if params[:days] && params[:days].to_i != 0
       # If it's not today, a done_at estimate means nothing.
       done_at = "-N/A-"
     elsif hours_needed_today > 0
