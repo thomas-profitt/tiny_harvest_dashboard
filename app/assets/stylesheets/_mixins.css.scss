@@ -6,6 +6,7 @@
 @mixin narrow {
   @include short-arrow-labels;
   @include fixed-arrows;
+  @include arrows-touch-sides;
   * {
     font-size:5vw;
   }
@@ -13,22 +14,12 @@
     height:100%;
     margin-top:0;
     max-width:calc(100% - 6em);
-    div, div:first-child, div:last-child {
-      background:none;
-      border:none;
-    }
   }
   #download-background-image {
     position:inherit;
     display:block;
     text-align:right;
     height:1em;
-  }
-  #yesterday, .back-to-today {
-    left:0;
-  }
-  #tomorrow, .forward-to-today {
-    right:0;
   }
   #download-background-image {
     top:0;
@@ -58,8 +49,7 @@
 @mixin medium-tall {
   @include wide-tall;
   @include short-arrow-labels;
-  @include fixed-arrows;
-  @include times-and-projects-no-padding;
+  @include fixed-arrows; @include times-and-projects-no-padding;
 }
 
 @mixin wide {
@@ -68,36 +58,8 @@
   @include times-and-projects-padding;
   @include centered-human-today;
   @include fixed-arrows;
-  .div-container {
-    width:13em;
-    div {
-      background-color:$cell-background-light;
-      border-top-width:2px;
-      border-bottom-width:2px;
-      border-top-style:solid;
-      border-bottom-style:solid;
-      border-top-color:$cell-border-light-on-light;
-      border-bottom-color:$cell-border-dark-on-light;
-
-      &:first-child, &:last-child {
-        border-top-left-radius:1em;
-        border-top-right-radius:3px;
-        background-color:$cell-background-dark;
-        border-top-width:3px;
-        border-top-color:$cell-border-light-on-dark;
-        border-bottom-color:$cell-border-dark-on-dark;
-      }
-      &:last-child {
-        border-top-left-radius:0;
-        border-top-right-radius:0;
-        border-bottom-right-radius:1em;
-        border-bottom-left-radius:3px;
-        border-bottom-width:3px;
-        border-top-color:$cell-border-less-light-on-dark;
-        border-bottom-color:$cell-border-less-dark-on-dark;
-      }
-    }
-  }
+  @include fixed-div-container;
+  @include shaded-divs;
 }
 
 @mixin wide-tall {
@@ -211,6 +173,53 @@
   }
   #today {
     top:50vh;
+  }
+}
+
+@mixin arrows-touch-sides {
+  #yesterday, .back-to-today {
+    left:0;
+  }
+  #tomorrow, .forward-to-today {
+    right:0;
+  }
+}
+
+@mixin fixed-div-container {
+  .div-container {
+    width:13em;
+  }
+}
+
+@mixin shaded-divs {
+  .div-container {
+    div {
+      background-color:$cell-background-light;
+      border-top-width:2px;
+      border-bottom-width:2px;
+      border-top-style:solid;
+      border-bottom-style:solid;
+      border-top-color:$cell-border-light-on-light;
+      border-bottom-color:$cell-border-dark-on-light;
+
+      &:first-child, &:last-child {
+        border-top-left-radius:1em;
+        border-top-right-radius:3px;
+        background-color:$cell-background-dark;
+        border-top-width:3px;
+        border-top-color:$cell-border-light-on-dark;
+        border-bottom-color:$cell-border-dark-on-dark;
+      }
+      &:last-child {
+        border-top-left-radius:0;
+        border-top-right-radius:0;
+        border-bottom-right-radius:1em;
+        border-bottom-left-radius:3px;
+        border-bottom-width:3px;
+        border-top-color:$cell-border-less-light-on-dark;
+        border-bottom-color:$cell-border-less-dark-on-dark;
+      }
+    }
   }
 }
 
