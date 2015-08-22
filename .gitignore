@@ -24,4 +24,4 @@
 *.swm
 .DS_Store
 
-public/assets/**
+public/assets
