@@ -16,7 +16,7 @@
 !/log/.keep
 /tmp
 
-.env
+/.env
 
 *.swp
 *.swo
@@ -24,4 +24,6 @@
 *.swm
 .DS_Store
 
-public/assets
+/public/assets/*
+!/log/.keep
+
