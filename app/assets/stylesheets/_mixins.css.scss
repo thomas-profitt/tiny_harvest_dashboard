@@ -1,6 +1,21 @@
 @mixin tiny {
   @include narrow;
   @include optimize-readability;
+  .big.time {
+    font-weight:400;
+  }
+  * {
+    font-size:8.5vw;
+  }
+  .time.big {
+    font-size:200%;
+  }
+  .div-container {
+    max-width:calc(100% - 4em);
+  }
+  #human-today {
+    font-size:140%;
+  }
 }
 
 @mixin narrow {
