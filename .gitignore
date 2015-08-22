@@ -25,5 +25,5 @@
 .DS_Store
 
 /public/assets/*
-!/log/.keep
+!/public/assets/.keep
 
