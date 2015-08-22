@@ -8,14 +8,13 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 gem 'harvested'
-gem 'dotenv-rails'
-
+gem 'dotenv-rails' # Convenient in production too
 gem 'haml'
 
 group :development, :test do
   gem 'spring'
 
-  gem 'colorize'
+  gem 'colorize' # For pretty puts debugging
   gem 'pry-rails'
   gem 'pry-nav'
 end
