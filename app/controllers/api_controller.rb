@@ -94,85 +94,104 @@ class ApiController < ApplicationController
   end
 
   def sky_color_for_hours(hours = Time.now.hour + (Time.now.min / 60.0) + (Time.now.sec / 3600.0))
+
+    stages = [
+      {
+        hours: 0..5,
+        color: {
+          red: 2,
+          green: 10,
+          blue: 20
+        }
+      },
+      {
+        hours: 5..12,
+        color: {
+          red: 2..138,
+          green: 10..191,
+          blue: 20..213,
+        }
+      },
+      {
+        hours: 12..15,
+        color: {
+          red: 138..108,
+          green: 191..153,
+          blue: 213..175
+        }
+      },
+      {
+        hours: 15..19,
+        color: {
+          red: 108..104,
+          green: 153..160,
+          blue: 175..138
+        }
+      },
+      {
+        hours: 19..20,
+        color: {
+          red: 104..255,
+          green: 160..182,
+          blue: 138..116
+        }
+      },
+      {
+        hours: 20..20.25,
+        color: {
+          red: 255..209,
+          green: 182..195,
+          blue: 116..185
+        }
+      },
+      {
+        hours: 20.25..20.5,
+        color: {
+          red: 209..126,
+          green: 195..109,
+          blue: 185..148
+        }
+      },
+      {
+        hours: 20.5..23,
+        color: {
+          red: 126..2,
+          green: 109..10,
+          blue: 148..20
+        }
+      },
+      {
+        hours: 23..24,
+        color: {
+          red: 2,
+          green: 10,
+          blue: 20
+        }
+      }
+    ]
+
+    # Default colors
     red = 13
     green = 30
     blue = 38
 
-    case hours
-    when 0..5, 23..24
-      red = 2
-      green = 10
-      blue = 20
-    when 5..12
-      red =
-        range_value_from_position(
-          2..138, range_position_from_value(5..12, hours))
-      green =
-        range_value_from_position(
-          10..191, range_position_from_value(5..12, hours))
-      blue =
-        range_value_from_position(
-          20..213, range_position_from_value(5..12, hours))
-    when 12..15
-      red =
-        range_value_from_position(
-          138..108, range_position_from_value(12..15, hours))
-      green =
-        range_value_from_position(
-          191..153, range_position_from_value(12..15, hours))
-      blue =
-        range_value_from_position(
-          213..175, range_position_from_value(12..15, hours))
-   when 15..19
-      red =
-        range_value_from_position(
-          108..104, range_position_from_value(15..19, hours))
-      green =
-        range_value_from_position(
-          153..160, range_position_from_value(15..19, hours))
-      blue =
-        range_value_from_position(
-          175..138, range_position_from_value(15..19, hours))
-    when 19..20
-      red =
-        range_value_from_position(
-          104..255, range_position_from_value(19..20, hours))
-      green =
-        range_value_from_position(
-          160..182, range_position_from_value(19..20, hours))
-      blue =
-        range_value_from_position(
-          138..116, range_position_from_value(19..20, hours))
-    when 20..20.25
-      red =
-        range_value_from_position(
-          255..209, range_position_from_value(20..20.25, hours))
-      green =
-        range_value_from_position(
-          182..195, range_position_from_value(20..20.25, hours))
-      blue =
-        range_value_from_position(
-          116..185, range_position_from_value(20..20.25, hours))
-    when 20.25..20.5
-      red =
-        range_value_from_position(
-          209..126, range_position_from_value(20.25..20.5, hours))
-      green =
-        range_value_from_position(
-          195..109, range_position_from_value(20.25..20.5, hours))
-      blue =
-        range_value_from_position(
-          185..148, range_position_from_value(20.25..20.5, hours))
-    when 20.5..23
-      red =
-        range_value_from_position(
-          126..2, range_position_from_value(20.5..23, hours))
-      green =
-        range_value_from_position(
-          109..10, range_position_from_value(20.5..23, hours))
-      blue =
-        range_value_from_position(
-          148..20, range_position_from_value(20.5..23, hours))
+    stages.each do |stage|
+      if stage[:hours].include? hours
+        color = stage[:color]
+        red, green, blue = color[:red], color[:green], color[:blue]
+
+        if red.class == Range
+          red = shift_proportions(hours, stage[:hours], red)
+        end
+        if green.class == Range
+          green = shift_proportions(hours, stage[:hours], green)
+        end
+        if blue.class == Range
+          blue = shift_proportions(hours, stage[:hours], blue)
+        end
+
+        break
+      end
     end
 
     color = "rgb(#{red.round},#{green.round},#{blue.round})"
@@ -198,11 +217,21 @@ class ApiController < ApplicationController
     value_from_zero = value - range.first
     range_from_zero = shift_range range, -range.first
 
-    value_from_zero / range_from_zero.last
+    value_from_zero / range_from_zero.last.to_f
   end
 
   def shift_range(range, shift)
     (range.first + shift)..(range.last + shift)
   end
 
+  # value is to old_range as the returned value is to new_range, eg.
+  # shift_proportions(5, 0..10, 0..100) #=> 50
+  # shift_proportions(5.0, 0..-10, 0..100) #=> -50.0
+  def shift_proportions(value, old_range, new_range)
+    ret = range_value_from_position(new_range, range_position_from_value(old_range, value))
+    ret = ret.to_i if value.class == Fixnum
+    ret
+  end
+
 end
+
