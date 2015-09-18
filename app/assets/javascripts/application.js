@@ -15,4 +15,5 @@
 //= require turbolinks
 //= require params
 //= require date
+//= require underscore
 //= require_tree .

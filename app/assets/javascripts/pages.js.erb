@@ -61,13 +61,25 @@ $(document).ready( function() {
   }, updateInterval);
 });
 
-// FIXME: There IS NO SPINNER.
-function startSpinner() {
-  $("html").css("background-color", "rgb(116,0,0)");
+function scrambleScrambledTimes() {
+  var possibleCharacters =
+    ['0','1','2','3','4','5','6','7','8','9','A','K'];
+  $(".scrambled-time").each(function(index, value) {
+    this.innerHTML =
+      _.sample(possibleCharacters, 2).join("")
+      + ":" + _.sample(possibleCharacters, 2).join("");
+  });
 }
 
-function stopSpinner() {
-  changeBackgroundColor();
+function startLoading() {
+  $(".time").addClass("scrambled-time");
+  window.clearInterval(scrambleScrambledTimes);
+  window.setInterval(scrambleScrambledTimes, 75);
+}
+
+function stopLoading() {
+  $(".time").removeClass("scrambled-time");
+  window.clearInterval(scrambleScrambledTimes);
 }
 
 function transition(direction) {
@@ -186,6 +198,7 @@ function clearHarvestData() {
   $("#hours-needed-today").html("XX:XX");
   $("#done-at").html("XX:XX");
   $("#times-and-projects").empty();
+  startLoading();
 }
 
 function updateHarvestData() {
@@ -198,6 +211,8 @@ function updateHarvestData() {
       $("#hours-today").html(response.hours_today);
       $("#hours-needed-today").html(response.hours_needed_today);
       $("#done-at").html(response.done_at);
+
+      stopLoading();
 
       $("#times-and-projects").empty();
       var timeAndProjectTemplate = $(
