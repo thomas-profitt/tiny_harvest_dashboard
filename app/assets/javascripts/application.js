@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require params
+//= require date
 //= require_tree .

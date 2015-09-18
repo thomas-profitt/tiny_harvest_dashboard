@@ -34,6 +34,26 @@ $(document).ready( function() {
     e.preventDefault();
   });
 
+  $("#last-sunday").click(function(e) {
+    // Dumb trick, works great
+    var newDays = days - 1;
+    while (Date.today().addDays(newDays).getDay() != Date.SUNDAY) {
+      newDays -= 1;
+    }
+    setDays(newDays);
+    e.preventDefault();
+  });
+
+  $("#this-sunday").click(function(e) {
+    // Dumb trick, works great
+    var newDays = days + 1;
+    while (Date.today().addDays(newDays).getDay() != Date.SUNDAY) {
+      newDays += 1;
+    }
+    setDays(newDays);
+    e.preventDefault();
+  });
+
   var intervalID = window.setInterval(function() {
     changeBackgroundColor();
     updateHarvestData();
@@ -97,6 +117,7 @@ function transition(direction) {
 
 function setDays(newDays) {
   var oldDays = days;
+  console.log("Changing days from " + oldDays + " to " + newDays);
   days = newDays;
 
   if (newDays < oldDays) {
