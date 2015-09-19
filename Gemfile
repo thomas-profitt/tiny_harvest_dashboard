@@ -11,6 +11,9 @@ gem 'harvested'
 gem 'dotenv-rails' # Convenient in production too
 gem 'haml'
 
+gem 'numeric_range_utils',
+  git: 'https://github.com/thomas-profitt/numeric_range_utils.git'
+
 group :development, :test do
   gem 'spring'
 
