@@ -252,6 +252,10 @@
 
 @mixin optimize-readability {
   /* FIXME: !important is only necessary because of the AJAX color changes */
+  * {
+    color: $optimized-readability-foreground !important;
+    text-shadow: none;
+  }
   html {
     background-color:$optimized-readability-background !important;
     background-image:none !important;
