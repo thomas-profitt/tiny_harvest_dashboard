@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/thomas-profitt/numeric-range-utils.git
+  revision: 0a1e7b95dd2f4ec3907a44a0c4cadb846f49c0ce
+  specs:
+    numeric-range-utils (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -153,6 +159,7 @@ DEPENDENCIES
   haml
   harvested
   jquery-rails
+  numeric-range-utils!
   pry-nav
   pry-rails
   rails (= 4.2.1)
