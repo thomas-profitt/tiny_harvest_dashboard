@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require params
 //= require date
 //= require underscore
 //= require_tree .
