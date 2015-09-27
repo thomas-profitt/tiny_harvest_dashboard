@@ -1,6 +1,7 @@
 @mixin tiny {
   @include narrow;
   @include optimize-readability;
+  @include small-arrows;
   .big.time {
     font-weight:400;
   }
@@ -22,6 +23,7 @@
   @include short-arrow-labels;
   @include fixed-arrows;
   @include arrows-touch-sides;
+  @include large-arrows;
   * {
     font-size:5vw;
   }
@@ -55,6 +57,7 @@
   @include short-arrow-labels;
   @include fixed-arrows;
   @include times-and-projects-no-padding;
+  @include large-arrows;
 }
 
 @mixin medium-short {
@@ -64,7 +67,9 @@
 @mixin medium-tall {
   @include wide-tall;
   @include short-arrow-labels;
-  @include fixed-arrows; @include times-and-projects-no-padding;
+  @include fixed-arrows;
+  @include times-and-projects-no-padding;
+  @include large-arrows;
 }
 
 @mixin wide {
@@ -75,6 +80,7 @@
   @include fixed-arrows;
   @include fixed-div-container;
   @include shaded-divs;
+  @include large-arrows;
 }
 
 @mixin wide-tall {
@@ -193,13 +199,13 @@
 
 @mixin centered-arrows {
   #last-sunday, #this-sunday {
-    top:calc(50vh - 1em);
+    top:calc(50vh - 2em);
   }
   #yesterday, #tomorrow {
     top:calc(50vh + 0em);
   }
   #today {
-    top:calc(50vh + 1em);
+    top:calc(50vh + 2em);
   }
 }
 
@@ -209,6 +215,18 @@
   }
   #tomorrow, .forward-to-today, #this-sunday {
     right:0;
+  }
+}
+
+@mixin small-arrows {
+  #yesterday, #today, #tomorrow, #last-sunday, #this-sunday {
+    font-size: 1.5em;
+  }
+}
+
+@mixin large-arrows {
+  #yesterday, #today, #tomorrow, #last-sunday, #this-sunday {
+    font-size: 2em;
   }
 }
 
@@ -331,7 +349,6 @@
   #yesterday, #today, #tomorrow, #last-sunday, #this-sunday {
     position:fixed;
     text-decoration:none;
-    font-size:2em;
   }
   #yesterday, .back-to-today, #last-sunday {
     left:0.5em;
