@@ -97,9 +97,42 @@ class ApiController < ApplicationController
 
   def sky_color_for_hours(hours = Time.now.hour + (Time.now.min / 60.0) + (Time.now.sec / 3600.0))
 
+    request_location = request.location
+    Rails.logger.info "request_location: " << request_location.inspect
+
+    if request_location.respond_to?(:latitude) && request_location.respond_to?(:longitude) &&
+    !(request_location.latitude == 0.0 || request_location.longitude == 0.0)
+      solar_day_latitude = request_location.latitude
+      solar_day_longitude = request_location.longitude
+    else
+      solar_day_latitude = ENV["DEFAULT_LATITUDE"].to_f
+      solar_day_longitude = ENV["DEFAULT_LONGITUDE"].to_f
+      Rails.logger.info "request_location invalid; using default latitude/longitude of #{solar_day_latitude}/#{solar_day_longitude}"
+    end
+
+    today = SolarDay.create_or_update_today_for_date_and_longitude_and_latitude(
+      (its_really_tomorrow ? Date.yesterday : Date.today),
+      solar_day_latitude,
+      solar_day_longitude
+    )
+
+    if today
+      Rails.logger.debug "hours: #{hours}"
+      Rails.logger.debug "today.sunrise_at: #{today.sunrise_at.inspect}"
+      Rails.logger.debug "today.sunrise_at_hours: #{today.sunrise_at_hours}"
+      Rails.logger.debug "today.solar_noon_at: #{today.solar_noon_at.inspect}"
+      Rails.logger.debug "today.solar_noon_at_hours: #{today.solar_noon_at_hours}"
+      Rails.logger.debug "today.sunset_at: #{today.sunset_at.inspect}"
+      Rails.logger.debug "today.sunset_at_hours: #{today.sunset_at_hours}"
+    end
+
+    sunrise_at_hours = today ? today.sunrise_at_hours : 5
+    solar_noon_at_hours = today ? today.solar_noon_at_hours : 12
+    sunset_at_hours = today ? today.sunset_at_hours : 20
+
     stages = [
       {
-        hours: 0..5,
+        hours: 0..sunrise_at_hours,
         color: {
           red: 2,
           green: 10,
@@ -107,7 +140,7 @@ class ApiController < ApplicationController
         }
       },
       {
-        hours: 5..12,
+        hours: sunrise_at_hours..solar_noon_at_hours,
         color: {
           red: 2..138,
           green: 10..191,
@@ -115,7 +148,7 @@ class ApiController < ApplicationController
         }
       },
       {
-        hours: 12..15,
+        hours: (solar_noon_at_hours)..(solar_noon_at_hours + 3),
         color: {
           red: 138..108,
           green: 191..153,
@@ -123,7 +156,7 @@ class ApiController < ApplicationController
         }
       },
       {
-        hours: 15..19,
+        hours: (solar_noon_at_hours + 3)..(sunset_at_hours - 1),
         color: {
           red: 108..104,
           green: 153..160,
@@ -131,7 +164,7 @@ class ApiController < ApplicationController
         }
       },
       {
-        hours: 19..20,
+        hours: (sunset_at_hours - 1)..(sunset_at_hours),
         color: {
           red: 104..255,
           green: 160..182,
@@ -139,7 +172,7 @@ class ApiController < ApplicationController
         }
       },
       {
-        hours: 20..20.25,
+        hours: (sunset_at_hours)..(sunset_at_hours + 0.25),
         color: {
           red: 255..209,
           green: 182..195,
@@ -147,7 +180,7 @@ class ApiController < ApplicationController
         }
       },
       {
-        hours: 20.25..20.5,
+        hours: (sunset_at_hours + 0.25)..(sunset_at_hours + 0.5),
         color: {
           red: 209..126,
           green: 195..109,
@@ -155,7 +188,7 @@ class ApiController < ApplicationController
         }
       },
       {
-        hours: 20.5..23,
+        hours: (sunset_at_hours + 0.5)..(23),
         color: {
           red: 126..2,
           green: 109..10,
@@ -171,6 +204,8 @@ class ApiController < ApplicationController
         }
       }
     ]
+
+    Rails.logger.debug "stages:\n#{stages.inspect}"
 
     # Default colors
     red = 13
