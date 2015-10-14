@@ -4,7 +4,9 @@ class PagesController < ApplicationController
   end
 
   def sky_color_test
-    @times = (0..200).to_a.map { |x| x / (200.0 / 24) }
+    samples = 100.0
+    @times = (0..samples).to_a.map { |x| x / (samples / 24) }
+    Rails.logger.debug "times: " << @times.inspect
   end
 
 end
