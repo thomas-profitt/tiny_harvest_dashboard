@@ -13,7 +13,7 @@ class SolarDay < ActiveRecord::Base
       sunrise_sunset_response = HTTParty.get(sunrise_sunset_api_endpoint)
       if sunrise_sunset_response["status"] == "OK"
         if today_for_location.update_attributes(
-          date: Date.today,
+          date: date,
           latitude: latitude,
           longitude: longitude,
           sunrise_at: time_from_sunrise_sunset_time_string(sunrise_sunset_response["results"]["sunrise"]),
