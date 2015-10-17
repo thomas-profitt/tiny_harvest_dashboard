@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require date
+//= require tinycolor
 //= require underscore
 //= require_tree .

@@ -1,16 +1,16 @@
 @import 'colors';
 
-.colored-text-day {
-  color:$colored-text-day;
+.colored-text {
+  color:$colored-text;
   &#done-at {
-    color:$done-at-day;
+    color:$done-at;
   }
   &a {
-    color:$active-day;
+    color:$active;
   }
 }
 
-.colored-text-night {
+.colored-text.colored-text-night {
   color:$colored-text-night;
   &#done-at {
     color:$done-at-night;

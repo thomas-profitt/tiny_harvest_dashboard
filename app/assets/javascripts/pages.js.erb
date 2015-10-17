@@ -1,5 +1,3 @@
-var coloredTextMode = "day";
-
 var updateInterval = 60000;
 var intervalID = null;
 
@@ -11,7 +9,6 @@ $(document).ready( function() {
   $("html").css("background-size", "cover");
   $("html").css("background-position", "top left");
   updateHarvestData();
-  updateColoredTextMode();
 
   var paramsDays = parseInt(getURLParam("days"));
   if (isNaN(paramsDays)) {
@@ -63,7 +60,6 @@ $(document).ready( function() {
   var intervalID = window.setInterval(function() {
     changeBackgroundColor();
     updateHarvestData();
-    updateColoredTextMode();
   }, updateInterval);
 });
 
@@ -194,6 +190,7 @@ function changeBackgroundColor(dateOrHours) {
     dataType:"json",
     complete: function(data) {
       $("html").css("background-color", data.responseJSON.sky_color);
+      updateColoredTextColorForBackgroundColor();
     }
   });
 }
@@ -223,9 +220,8 @@ function updateHarvestData() {
       $("#times-and-projects").empty();
       var timeAndProjectTemplate = $(
         '<li class="time-and-project">'
-        + '<span class="time colored-text-'
-        + coloredTextMode
-        + '"></span><span class="project"></span>'
+        + '<span class="time colored-text"></span>'
+        + '<span class="project"></span>'
         + '</li>');
       for (var key in response.projects_and_hours_this_week) {
         var newTimeAndProject = timeAndProjectTemplate;
@@ -235,27 +231,32 @@ function updateHarvestData() {
           .html(" " + key);
         $("#times-and-projects").append(newTimeAndProject[0].outerHTML);
       }
+      // If there are other .colored-texts, with .colored-text-night,
+      // these should be .colored-text-night too.
+      if ($(".colored-text.colored-text-night").length > 0) {
+        $(".time-and-project .colored-text").each(function() {
+          this.classList.add("colored-text-night");
+        });
+      }
     }
   });
 }
 
-function updateColoredTextMode() {
-  var oldColoredTextMode = coloredTextMode;
-  var now = new Date();
+function updateColoredTextColorForBackgroundColor() {
+    var night = false;
+    var brightness =
+      tinycolor($("html").css("background-color")).getBrightness();
 
-  if (now.getHours() + now.getMinutes() / 60.0 >= 20.5 || now.getHours() <= 5) {
-    coloredTextMode = "night";
-  } else {
-    coloredTextMode = "day";
-  }
+    if ((brightness / 255.0) <= 0.5) {
+      night = true;
+    }
 
-  if (oldColoredTextMode != coloredTextMode) {
-    $(".colored-text-" + oldColoredTextMode).each(function() {
-      this.classList.remove("colored-text-" + oldColoredTextMode);
-      this.classList.add("colored-text-" + coloredTextMode)
+    $(".colored-text").each(function() {
+      this.classList.remove("colored-text-night");
+      if (night == true) {
+        this.classList.add("colored-text-night");
+      }
     });
-  }
-
 }
 
 function itsReallyTomorrow() {
