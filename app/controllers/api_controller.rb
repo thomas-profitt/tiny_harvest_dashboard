@@ -1,3 +1,5 @@
+require 'pp'
+
 class ApiController < ApplicationController
 
   # GET
