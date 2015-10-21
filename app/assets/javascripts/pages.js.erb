@@ -1,5 +1,5 @@
-var updateInterval = 60000;
-var intervalID = null;
+var updateHarvestDataInterval = 60000;
+var changeBackgroundColorInterval = 30000;
 
 var days = 0;
 
@@ -57,10 +57,14 @@ $(document).ready( function() {
     e.preventDefault();
   });
 
-  var intervalID = window.setInterval(function() {
-    changeBackgroundColor();
+  window.setInterval(function() {
     updateHarvestData();
-  }, updateInterval);
+  }, updateHarvestDataInterval);
+
+  window.setInterval(function() {
+    changeBackgroundColor();
+  }, changeBackgroundColorInterval);
+
 });
 
 function scrambleScrambledTimes() {
