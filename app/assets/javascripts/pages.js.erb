@@ -194,7 +194,7 @@ function changeBackgroundColor(dateOrHours) {
     dataType:"json",
     complete: function(data) {
       $("html").css("background-color", data.responseJSON.sky_color);
-      updateColoredTextColorForBackgroundColor();
+      updateColoredTextColorForBackgroundColor(data.responseJSON.sky_color);
     }
   });
 }
@@ -246,21 +246,24 @@ function updateHarvestData() {
   });
 }
 
-function updateColoredTextColorForBackgroundColor() {
-    var night = false;
-    var brightness =
-      tinycolor($("html").css("background-color")).getBrightness();
+function updateColoredTextColorForBackgroundColor(backgroundColor) {
+  if (!(typeof backgroundColor === typeof "string")) {
+    backgroundColor = $("html").css("background-color");
+  }
 
-    if ((brightness / 255.0) <= 0.5) {
-      night = true;
+  var night = false;
+  var brightness = tinycolor(backgroundColor).getBrightness();
+
+  if ((brightness / 255.0) <= 0.5) {
+    night = true;
+  }
+
+  $(".colored-text").each(function() {
+    this.classList.remove("colored-text-night");
+    if (night == true) {
+      this.classList.add("colored-text-night");
     }
-
-    $(".colored-text").each(function() {
-      this.classList.remove("colored-text-night");
-      if (night == true) {
-        this.classList.add("colored-text-night");
-      }
-    });
+  });
 }
 
 function itsReallyTomorrow() {
