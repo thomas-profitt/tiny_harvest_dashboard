@@ -166,7 +166,7 @@ class ApiController < ApplicationController
         }
       },
       {
-        hours: (sunset_at_hours - 1)..(sunset_at_hours),
+        hours: (sunset_at_hours - 1)..(sunset_at_hours + 0.1),
         color: {
           red: 104..255,
           green: 160..182,
@@ -174,7 +174,7 @@ class ApiController < ApplicationController
         }
       },
       {
-        hours: (sunset_at_hours)..(sunset_at_hours + 0.25),
+        hours: (sunset_at_hours + 0.1)..(sunset_at_hours + 0.25),
         color: {
           red: 255..209,
           green: 182..195,
@@ -207,7 +207,7 @@ class ApiController < ApplicationController
       }
     ]
 
-    Rails.logger.debug "stages:\n#{stages.inspect}"
+    Rails.logger.debug "stages:\n#{stages.pretty_inspect}"
 
     # Default colors
     red = 13
