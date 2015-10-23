@@ -142,11 +142,19 @@ class ApiController < ApplicationController
         }
       },
       {
+        hours: sunrise_at_hours..(sunrise_at_hours + 1),
+        color: {
+          red: 2..114,
+          green: 10..161,
+          blue: 20..183,
+        }
+      },
+      {
         hours: sunrise_at_hours..solar_noon_at_hours,
         color: {
-          red: 2..138,
-          green: 10..191,
-          blue: 20..213,
+          red: 114..138,
+          green: 161..191,
+          blue: 183..213,
         }
       },
       {
