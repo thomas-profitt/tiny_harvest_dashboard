@@ -19,7 +19,7 @@ class ApiController < ApplicationController
       harvest_time_data = harvest.time.all(date)
       total_hours_this_date = harvest_time_data.map{|x| x[:hours] }.inject(:+)
       { date: date,
-        hours: (harvest_time_data.map{ |x| {x[:project] => x[:hours]} } << { "Total" => total_hours_this_date || 0 }).inject(:merge)
+        hours: (harvest_time_data.map{ |x| {x[:project] => x[:hours]} } << { "Total" => total_hours_this_date || 0 }).inject { |memo, el| memo.merge(el) { |key, oldval, newval| oldval + newval } }
       }
     end
 
