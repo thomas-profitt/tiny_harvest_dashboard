@@ -69,13 +69,27 @@ class ApiController < ApplicationController
     projects_and_hours_this_week =
       Hash[days_and_hours_this_week.map { |x| x[:hours] }.inject { |memo, el| memo.merge(el) { |k, old_v, new_v| old_v + new_v }}.sort_by { |k, v| v }.each { |a| a[-1] = hours_to_human a[-1] }.reject { |a| a.first == "Total" }.reverse]
 
-    render json: {
-      human_today: human_today,
-      hours_today: hours_to_human(hours_today),
-      hours_needed_today: hours_to_human(hours_needed_today),
-      done_at: done_at,
-      projects_and_hours_this_week: projects_and_hours_this_week
-    }
+    case params[:format]
+    when "json"
+      render json: {
+        human_today: human_today,
+        hours_today: hours_to_human(hours_today),
+        hours_needed_today: hours_to_human(hours_needed_today),
+        done_at: done_at,
+        projects_and_hours_this_week: projects_and_hours_this_week
+      }
+    when "txt"
+      human_projects_and_hours_this_week = ""
+      projects_and_hours_this_week.each do |k, v|
+        human_projects_and_hours_this_week << "\n  #{v} #{k}"
+      end
+      render plain: [
+        "#{human_today}",
+        "  #{hours_to_human(hours_today)} today",
+        "  #{hours_to_human(hours_needed_today)} to go",
+        "  Done at #{done_at}",
+        "#{human_projects_and_hours_this_week}"].join("\n")
+    end
   end
 
   def sky_color
