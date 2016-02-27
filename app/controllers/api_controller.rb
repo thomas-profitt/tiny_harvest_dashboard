@@ -13,9 +13,9 @@ class ApiController < ApplicationController
     today += params[:days].to_i.days
     human_today = today.to_time.strftime("%A, #{today.to_time.day.ordinalize}")
 
-    monday = today
-    monday -= 1.day until monday.monday?
-    days_and_hours_this_week = (monday..today).map do |date|
+    sunday = today
+    sunday -= 1.day until sunday.sunday?
+    days_and_hours_this_week = (sunday..today).map do |date|
       harvest_time_data = harvest.time.all(date)
       total_hours_this_date = harvest_time_data.map{|x| x[:hours] }.inject(:+)
       { date: date,

@@ -183,8 +183,8 @@
   .forward-to-today:before, .back-to-today:after {
     content:"Today";
   }
-  #last-sunday:after, #this-sunday:before {
-    content:"Sunday";
+  #last-saturday:after, #this-saturday:before {
+    content:"Saturday";
   }
 }
 
@@ -192,13 +192,13 @@
   .forward-to-today:before, .back-to-today:after {
     content:"T";
   }
-  #last-sunday:after, #this-sunday:before {
+  #last-saturday:after, #this-saturday:before {
     content:"S";
   }
 }
 
 @mixin fixed-arrows {
-  #last-sunday, #this-sunday {
+  #last-saturday, #this-saturday {
     top:3em;
   }
   #yesterday, #tomorrow {
@@ -210,7 +210,7 @@
 }
 
 @mixin centered-arrows {
-  #last-sunday, #this-sunday {
+  #last-saturday, #this-saturday {
     top:calc(50vh - 2em);
   }
   #yesterday, #tomorrow {
@@ -222,22 +222,22 @@
 }
 
 @mixin arrows-touch-sides {
-  #yesterday, .back-to-today, #last-sunday {
+  #yesterday, .back-to-today, #last-saturday {
     left:0;
   }
-  #tomorrow, .forward-to-today, #this-sunday {
+  #tomorrow, .forward-to-today, #this-saturday {
     right:0;
   }
 }
 
 @mixin small-arrows {
-  #yesterday, #today, #tomorrow, #last-sunday, #this-sunday {
+  #yesterday, #today, #tomorrow, #last-saturday, #this-saturday {
     font-size: 1.5em;
   }
 }
 
 @mixin large-arrows {
-  #yesterday, #today, #tomorrow, #last-sunday, #this-sunday {
+  #yesterday, #today, #tomorrow, #last-saturday, #this-saturday {
     font-size: 2em;
   }
 }
@@ -358,17 +358,17 @@
   a {
     text-decoration:underline;
   }
-  #yesterday, #today, #tomorrow, #last-sunday, #this-sunday {
+  #yesterday, #today, #tomorrow, #last-saturday, #this-saturday {
     position:fixed;
     text-decoration:none;
   }
-  #yesterday, .back-to-today, #last-sunday {
+  #yesterday, .back-to-today, #last-saturday {
     left:0.5em;
     &:before {
       content:"〈";
     }
   }
-  #tomorrow, .forward-to-today, #this-sunday {
+  #tomorrow, .forward-to-today, #this-saturday {
     right:0.5em;
     &:after {
       content:"〉";

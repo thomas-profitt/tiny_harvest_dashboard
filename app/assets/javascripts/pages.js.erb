@@ -31,12 +31,12 @@ $(document).ready( function() {
     e.preventDefault();
   });
 
-  $("#last-sunday").click(function(e) {
+  $("#last-saturday").click(function(e) {
     // FIXME: Sandwich code should be used to DRY out these two functions
     // Dumb trick, works great
     var newDays = days - 1;
 
-    while (getToday().addDays(newDays).getDay() != Date.SUNDAY) {
+    while (getToday().addDays(newDays).getDay() != Date.SATURDAY) {
       newDays -= 1;
     }
 
@@ -44,12 +44,12 @@ $(document).ready( function() {
     e.preventDefault();
   });
 
-  $("#this-sunday").click(function(e) {
+  $("#this-saturday").click(function(e) {
     // FIXME: Sandwich code should be used to DRY out these two functions
     // Dumb trick, works great
     var newDays = days + 1;
 
-    while (getToday().addDays(newDays).getDay() != Date.SUNDAY) {
+    while (getToday().addDays(newDays).getDay() != Date.SATURDAY) {
       newDays += 1;
     }
 
