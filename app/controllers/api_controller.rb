@@ -39,14 +39,14 @@ class ApiController < ApplicationController
     hours_today ||= 0
 
     hours_owed =
-      (8 * (days_and_hours_this_week.length - 1)) -
+      (8 * (days_and_hours_this_week.length - 2)) -
       (hours_this_week - hours_today)
 
     # hours_needed_today now reflects how many hours total were needed today,
     # not counting hours logged today.
     # Later, hours_today is subtracted from it.
     hours_needed_today = 40 - (hours_this_week - hours_today)
-    unless today.friday? || today.sunday? || today.saturday?
+    unless today.friday? || today.saturday?
       if hours_needed_today > (8 + hours_owed)
         hours_needed_today = (8 + hours_owed)
       end
