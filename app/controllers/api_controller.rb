@@ -11,7 +11,8 @@ class ApiController < ApplicationController
     today = Date.today
     today -= 1.day if its_really_tomorrow
     today += params[:days].to_i.days
-    human_today = today.to_time.strftime("%A, #{today.to_time.day.ordinalize}")
+    human_today =
+      today.to_time.strftime("%a, %b #{today.to_time.day.ordinalize}")
 
     sunday = today
     sunday -= 1.day until sunday.sunday?
