@@ -82,14 +82,17 @@ class ApiController < ApplicationController
     when "txt"
       human_projects_and_hours_this_week = ""
       projects_and_hours_this_week.each do |k, v|
-        human_projects_and_hours_this_week << "\n  #{v} #{k}"
+        human_projects_and_hours_this_week << "#{v} #{k}" << "\n"
       end
       render plain: [
-        "#{human_today}",
-        "  #{hours_to_human(hours_today)} today",
-        "  #{hours_to_human(hours_needed_today)} to go",
-        "  Done at #{done_at}",
-        "#{human_projects_and_hours_this_week}"].join("\n")
+          "#{human_today}",
+          "",
+          "#{hours_to_human(hours_today)} today",
+          "#{hours_to_human(hours_needed_today)} to go",
+          "Done at #{done_at}",
+          "",
+          "#{human_projects_and_hours_this_week}"
+        ].join("\n")
     end
   end
 
