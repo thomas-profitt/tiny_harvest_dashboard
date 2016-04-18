@@ -1,5 +1,7 @@
 var updateHarvestDataInterval = 60000;
+var updateHarvestDataIntervalID = null;
 var changeBackgroundColorInterval = 30000;
+var changeBackgroundColorIntervalID = null;
 
 var days = 0;
 
@@ -57,13 +59,15 @@ $(document).ready( function() {
     e.preventDefault();
   });
 
-  window.setInterval(function() {
-    updateHarvestData();
-  }, updateHarvestDataInterval);
+  updateHarvestDataIntervalID =
+    window.setInterval(function() {
+      updateHarvestData();
+    }, updateHarvestDataInterval);
 
-  window.setInterval(function() {
-    changeBackgroundColor();
-  }, changeBackgroundColorInterval);
+  changeBackgroundColorIntervalID =
+    window.setInterval(function() {
+      changeBackgroundColor();
+    }, changeBackgroundColorInterval);
 
 });
 

@@ -27,7 +27,8 @@
         changeBackgroundColor(hours);
       });
     $("body").append($("<span id='test-hours'></span>"));
-    window.clearInterval(intervalID);
+    window.clearInterval(updateBackgroundColorIntervalID);
+    window.clearInterval(updateHarvestDataIntervalID);
     $("html").css("transition", "none");
     $("*").css("margin", "0");
   });
