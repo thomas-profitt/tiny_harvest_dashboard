@@ -161,9 +161,9 @@ class ApiController < ApplicationController
       {
         hours: 0..sunrise_at_hours,
         color: {
-          red: 2,
-          green: 10,
-          blue: 20
+          red: 33,
+          green: 18,
+          blue: 68
         }
       },
       {
@@ -207,7 +207,7 @@ class ApiController < ApplicationController
         }
       },
       {
-        hours: (sunset_at_hours + 0.1)..(sunset_at_hours + 0.25),
+        hours: (sunset_at_hours + 0.1)..(sunset_at_hours + 0.15),
         color: {
           red: 255..209,
           green: 182..195,
@@ -215,7 +215,7 @@ class ApiController < ApplicationController
         }
       },
       {
-        hours: (sunset_at_hours + 0.25)..(sunset_at_hours + 0.5),
+        hours: (sunset_at_hours + 0.15)..(sunset_at_hours + 0.5),
         color: {
           red: 209..126,
           green: 195..109,
@@ -225,17 +225,17 @@ class ApiController < ApplicationController
       {
         hours: (sunset_at_hours + 0.5)..(23),
         color: {
-          red: 126..2,
-          green: 109..10,
-          blue: 148..20
+          red: 126..33,
+          green: 109..18,
+          blue: 148..68
         }
       },
       {
         hours: 23..24,
         color: {
-          red: 2,
-          green: 10,
-          blue: 20
+          red: 33,
+          green: 18,
+          blue: 68
         }
       }
     ]
