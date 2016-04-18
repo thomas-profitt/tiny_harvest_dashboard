@@ -117,7 +117,14 @@ class ApiController < ApplicationController
 
   def sky_color_for_hours(hours = Time.now.hour + (Time.now.min / 60.0) + (Time.now.sec / 3600.0))
 
-    request_location = request.location
+    request_location = nil
+    begin
+      request_location = request.location
+    rescue => e
+      logger.warn "freegeoip.net must be down."
+      logger.warn e.message
+    end
+
     Rails.logger.info "request_location: " << request_location.inspect
 
     if request_location.respond_to?(:latitude) && request_location.respond_to?(:longitude) &&
